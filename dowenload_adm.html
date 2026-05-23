@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Administrasi — SMKS Ciledug Al Musaddadiyah Garut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --blue-deep:   #0b3d91;
+  --blue-mid:    #1565c0;
+  --blue-bright: #1e88e5;
+  --blue-light:  #90caf9;
+  --blue-pale:   #e3f2fd;
+  --gold:        #ffb300;
+  --gold-light:  #ffd54f;
+  --gold-dim:    #fff8e1;
+  --bg:          #f5f9ff;
+  --surface:     #ffffff;
+  --border:      #daeaff;
+  --text-1:      #0d1b3e;
+  --text-2:      #2c3e6b;
+  --text-3:      #6b7fa8;
+  --sh-sm: 0 2px 8px rgba(11,61,145,.08);
+  --sh-md: 0 6px 24px rgba(11,61,145,.12);
+  --sh-lg: 0 16px 48px rgba(11,61,145,.16);
+  --r: 14px;
+  --nav-h: 64px;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text-2);overflow-x:hidden;min-height:100vh}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ═══════════════════════════════════════════
+   TOP BANNER
+═══════════════════════════════════════════ */
+.top-banner{
+  background:var(--blue-deep);
+  padding:7px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:11.5px;color:rgba(255,255,255,.65);
+  gap:12px;flex-wrap:wrap;
+}
+.tb-left{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-right{display:none}
+.tb-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+
+/* ═══════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════ */
+nav{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  height:var(--nav-h);
+  padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;
+  box-shadow:var(--sh-sm);
+}
+.nav-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.nav-logo{
+  width:40px;height:40px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:12px;
+  color:#fff;text-align:center;line-height:1.1;
+  box-shadow:0 4px 10px rgba(30,136,229,.3);
+  position:relative;overflow:hidden;
+}
+.nav-logo::after{content:'';position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:var(--gold);opacity:.7}
+.nav-titles{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.nav-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;color:var(--blue-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-sub{font-size:10.5px;color:var(--text-3);font-weight:500}
+.nav-links{display:none}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-cta{
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
+  color:#fff;padding:8px 16px;border-radius:8px;
+  font-size:12.5px;font-weight:600;white-space:nowrap;
+  box-shadow:0 3px 10px rgba(30,136,229,.3);transition:all .2s;
+}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(30,136,229,.4)}
+.hamburger{
+  display:flex;flex-direction:column;justify-content:center;gap:5px;
+  width:36px;height:36px;padding:6px;cursor:pointer;
+  border:1.5px solid var(--border);border-radius:8px;background:transparent;
+  flex-shrink:0;
+}
+.hamburger span{display:block;height:2px;background:var(--blue-deep);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* MOBILE MENU DRAWER */
+.nav-drawer{
+  position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;
+  background:rgba(11,61,145,.3);backdrop-filter:blur(4px);
+  z-index:190;opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.nav-drawer.open{opacity:1;pointer-events:all}
+.nav-drawer-panel{
+  background:var(--surface);
+  padding:16px;
+  display:flex;flex-direction:column;gap:4px;
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--sh-md);
+  transform:translateY(-8px);transition:transform .25s;
+}
+.nav-drawer.open .nav-drawer-panel{transform:translateY(0)}
+.nav-drawer a{
+  padding:13px 16px;border-radius:10px;font-size:15px;font-weight:500;
+  color:var(--text-2);display:flex;align-items:center;gap:10px;
+  border:1.5px solid transparent;transition:all .15s;
+}
+.nav-drawer a:hover{background:var(--blue-pale);color:var(--blue-deep);border-color:var(--border)}
+.nav-drawer a.active{background:var(--blue-pale);color:var(--blue-bright);font-weight:600;border-color:var(--blue-light)}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero{
+  background:linear-gradient(150deg,var(--blue-deep) 0%,var(--blue-mid) 55%,var(--blue-bright) 100%);
+  padding:52px 20px 80px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 110%,rgba(255,179,0,.2) 0%,transparent 70%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:32px 32px}
+.hero-circles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-circles span{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.07)}
+.hero-circles span:nth-child(1){width:300px;height:300px;top:-80px;left:-80px}
+.hero-circles span:nth-child(2){width:220px;height:220px;top:20px;right:-50px}
+.hero-circles span:nth-child(3){width:160px;height:160px;bottom:-40px;left:35%}
+
+.hero-content{position:relative;z-index:1}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.12);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.2);
+  padding:5px 14px;border-radius:999px;margin-bottom:20px;
+  font-size:11px;font-weight:600;color:rgba(255,255,255,.9);
+  letter-spacing:.7px;text-transform:uppercase;
+}
+.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.hero h1{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(26px,7vw,52px);font-weight:800;
+  color:#fff;line-height:1.1;letter-spacing:-1px;
+  margin-bottom:16px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-info-pills{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+  margin-bottom:20px;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.1);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.15);
+  padding:5px 12px;border-radius:999px;
+  font-size:12px;color:rgba(255,255,255,.85);
+  white-space:nowrap;
+}
+.pill.gold-pill{background:rgba(255,179,0,.2);border-color:rgba(255,179,0,.4);color:var(--gold-light);font-weight:700}
+.hero p{
+  max-width:520px;margin:0 auto 28px;
+  font-size:14.5px;line-height:1.65;color:rgba(255,255,255,.72);
+}
+.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  background:#fff;color:var(--blue-deep);
+  padding:11px 22px;border-radius:10px;
+  font-weight:700;font-size:13.5px;
+  box-shadow:0 4px 14px rgba(0,0,0,.2);
+  transition:all .25s;display:inline-flex;align-items:center;gap:7px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 7px 20px rgba(0,0,0,.27)}
+.btn-ghost{
+  background:rgba(255,255,255,.12);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.25);color:#fff;
+  padding:11px 22px;border-radius:10px;
+  font-weight:600;font-size:13.5px;
+  transition:all .25s;display:inline-flex;align-items:center;gap:7px;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.hero-stats{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:0;
+  margin-top:40px;padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.12);
+}
+.stat{text-align:center;padding:0 20px;border-right:1px solid rgba(255,255,255,.12)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;color:#fff}
+.stat-num span{color:var(--gold-light)}
+.stat-label{font-size:11px;color:rgba(255,255,255,.55);font-weight:500;margin-top:2px;letter-spacing:.3px}
+
+/* ═══════════════════════════════════════════
+   SEARCH
+═══════════════════════════════════════════ */
+.search-section{
+  max-width:680px;margin:-28px auto 0;
+  padding:0 16px;position:relative;z-index:10;
+}
+.search-wrap{
+  background:var(--surface);border-radius:var(--r);
+  box-shadow:var(--sh-lg);padding:5px 5px 5px 16px;
+  display:flex;align-items:center;gap:10px;
+  border:1.5px solid var(--border);
+}
+.search-icon{color:var(--text-3);flex-shrink:0;width:18px;height:18px}
+.search-wrap input{
+  flex:1;border:none;outline:none;min-width:0;
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  color:var(--text-1);background:transparent;padding:9px 0;
+}
+.search-wrap input::placeholder{color:var(--text-3)}
+.search-btn{
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
+  color:#fff;border:none;padding:10px 18px;border-radius:10px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;
+  cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;
+}
+.search-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(30,136,229,.4)}
+
+/* ═══════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════ */
+main{max-width:1200px;margin:0 auto;padding:48px 16px 72px}
+
+/* SECTION HEADER */
+.sh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;gap:12px;flex-wrap:wrap}
+.sh-left{}
+.sl{
+  font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--blue-bright);margin-bottom:5px;
+  display:flex;align-items:center;gap:7px;
+}
+.sl::before{content:'';display:block;width:18px;height:2px;background:var(--gold);border-radius:2px}
+.st{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(20px,4vw,26px);font-weight:800;color:var(--text-1);letter-spacing:-.4px}
+.section-link{
+  color:var(--blue-bright);font-weight:600;font-size:13px;
+  display:flex;align-items:center;gap:4px;white-space:nowrap;
+  padding:7px 12px;border-radius:8px;transition:background .2s;flex-shrink:0;
+}
+.section-link:hover{background:var(--blue-pale)}
+
+/* ═══════════════════════════════════════════
+   INFO CARDS
+═══════════════════════════════════════════ */
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));
+  gap:12px;margin-bottom:44px;
+}
+.info-card{
+  background:var(--surface);border-radius:var(--r);
+  border:1.5px solid var(--border);padding:16px;
+  display:flex;gap:12px;align-items:flex-start;
+  transition:box-shadow .2s,border-color .2s;
+}
+.info-card:hover{box-shadow:var(--sh-sm);border-color:var(--blue-light)}
+.ic-icon{width:38px;height:38px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px}
+.ic-b{background:var(--blue-pale)}
+.ic-g{background:var(--gold-dim)}
+.ic-gr{background:#e8f5e9}
+.ic-t{background:#e0f7fa}
+.ic-lbl{font-size:10.5px;color:var(--text-3);font-weight:600;letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px}
+.ic-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;font-weight:700;color:var(--text-1);line-height:1.3}
+
+/* ═══════════════════════════════════════════
+   PROGRAM KEAHLIAN
+═══════════════════════════════════════════ */
+.prodi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));
+  gap:12px;margin-bottom:48px;
+}
+.prodi-card{
+  background:var(--surface);border-radius:var(--r);
+  border:1.5px solid var(--border);padding:16px;
+  display:flex;gap:12px;align-items:center;
+  transition:all .2s;
+}
+.prodi-card:hover{box-shadow:var(--sh-sm);border-color:var(--blue-light);transform:translateY(-2px)}
+.prodi-icon{width:42px;height:42px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:19px}
+.prodi-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--text-1);line-height:1.3;margin-bottom:3px}
+.prodi-pd{font-size:12px;color:var(--text-3);font-weight:500}
+.prodi-pd strong{color:var(--blue-bright);font-weight:700}
+
+/* PRODI PROGRESS BAR */
+.prodi-bar-wrap{margin-top:5px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.prodi-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue-bright),var(--blue-deep));transition:width .6s ease}
+
+/* ═══════════════════════════════════════════
+   QUICK ACCESS
+═══════════════════════════════════════════ */
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-bottom:48px;
+}
+.quick-card{
+  background:var(--surface);border-radius:var(--r);
+  border:1.5px solid var(--border);
+  padding:18px 14px;cursor:pointer;
+  transition:all .25s;text-decoration:none;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  position:relative;overflow:hidden;
+}
+.quick-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue-deep),var(--blue-bright));
+  transform:scaleX(0);transform-origin:left;transition:transform .28s;
+}
+.quick-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md);border-color:var(--blue-light)}
+.quick-card:hover::before{transform:scaleX(1)}
+.qc-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.qc-b{background:var(--blue-pale)}
+.qc-g{background:var(--gold-dim)}
+.qc-t{background:#e0f2f1}
+.qc-p{background:#f3e5f5}
+.qc-r{background:#fce4ec}
+.qc-gr{background:#e8f5e9}
+.qc-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--text-1);line-height:1.3}
+.qc-count{font-size:11.5px;color:var(--text-3);font-weight:500}
+
+/* ═══════════════════════════════════════════
+   DOC CARDS
+═══════════════════════════════════════════ */
+.doc-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));
+  gap:16px;margin-bottom:48px;
+}
+.doc-card{
+  background:var(--surface);border-radius:var(--r);
+  border:1.5px solid var(--border);padding:18px;
+  transition:all .25s;display:flex;flex-direction:column;gap:12px;
+}
+.doc-card:hover{box-shadow:var(--sh-md);border-color:var(--blue-light);transform:translateY(-2px)}
+.doc-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:3px 9px;border-radius:5px}
+.b-pdf{background:#fce4ec;color:#c62828}
+.b-doc{background:#e3f2fd;color:#1565c0}
+.b-xls{background:#e8f5e9;color:#2e7d32}
+.b-new{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--blue-deep)}
+.doc-date{font-size:11.5px;color:var(--text-3);margin-left:auto;white-space:nowrap}
+.doc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:14.5px;font-weight:700;color:var(--text-1);line-height:1.35}
+.doc-desc{font-size:12.5px;color:var(--text-3);line-height:1.55;flex:1}
+.doc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);gap:8px}
+.doc-size{font-size:11.5px;color:var(--text-3)}
+.btn-dl{
+  background:var(--blue-pale);color:var(--blue-deep);
+  border:none;padding:7px 14px;border-radius:7px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:12px;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;
+}
+.btn-dl:hover{background:var(--blue-deep);color:#fff}
+
+/* ═══════════════════════════════════════════
+   JADWAL UJIAN — horizontal scroll on mobile
+═══════════════════════════════════════════ */
+.jadwal-section{margin-bottom:48px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r);border:1.5px solid var(--border);box-shadow:var(--sh-sm)}
+.table-scroll::-webkit-scrollbar{height:4px}
+.table-scroll::-webkit-scrollbar-track{background:var(--bg)}
+.table-scroll::-webkit-scrollbar-thumb{background:var(--blue-light);border-radius:2px}
+.jadwal-tbl{width:100%;border-collapse:collapse;min-width:620px;background:var(--surface)}
+.jadwal-tbl thead tr{background:linear-gradient(90deg,var(--blue-deep),var(--blue-mid))}
+.jadwal-tbl thead th{
+  padding:13px 16px;text-align:left;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;
+  color:#fff;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;
+}
+.jadwal-tbl tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+.jadwal-tbl tbody tr:hover{background:var(--blue-pale)}
+.jadwal-tbl tbody tr:last-child{border-bottom:none}
+.jadwal-tbl td{padding:12px 16px;font-size:13px;color:var(--text-2);vertical-align:middle;white-space:nowrap}
+.jadwal-tbl td:first-child{font-weight:600;color:var(--text-1)}
+.stbadge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700}
+.st-up{background:#e8f5e9;color:#1b5e20}
+.st-do{background:#f5f5f5;color:#9e9e9e}
+.stdot{width:5px;height:5px;border-radius:50%}
+.st-up .stdot{background:#2e7d32}
+.st-do .stdot{background:#9e9e9e}
+
+/* ═══════════════════════════════════════════
+   PENGUMUMAN
+═══════════════════════════════════════════ */
+.news-section{margin-bottom:48px}
+.news-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.news-card{
+  background:var(--surface);border-radius:var(--r);
+  border:1.5px solid var(--border);padding:20px;transition:all .25s;
+}
+.news-card:hover{box-shadow:var(--sh-md);border-color:var(--blue-light)}
+.n-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.nt-warn{background:var(--gold-dim);color:#e65100}
+.nt-info{background:var(--blue-pale);color:var(--blue-deep)}
+.n-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;color:var(--text-1);line-height:1.3;margin-bottom:9px}
+.n-excerpt{font-size:13px;color:var(--text-3);line-height:1.6;margin-bottom:14px}
+.n-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.n-date{font-size:11.5px;color:var(--text-3)}
+.n-read{color:var(--blue-bright);font-weight:600;font-size:13px;display:flex;align-items:center;gap:4px;transition:gap .2s}
+.n-read:hover{gap:8px}
+.notif-card{background:var(--surface);border-radius:var(--r);border:1.5px solid var(--border);padding:18px}
+.notif-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.notif-list{display:flex;flex-direction:column;gap:10px}
+.notif-item{display:flex;gap:10px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.notif-item:last-child{border-bottom:none;padding-bottom:0}
+.ndot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.nd-g{background:var(--gold)}
+.nd-b{background:var(--blue-bright)}
+.nd-r{background:#e53935}
+.n-text{font-size:12.5px;line-height:1.5;color:var(--text-2)}
+.n-time{font-size:11px;color:var(--text-3);margin-top:2px}
+
+/* ═══════════════════════════════════════════
+   ADMINISTRASI
+═══════════════════════════════════════════ */
+.admin-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));
+  gap:16px;margin-bottom:48px;
+}
+.admin-card{
+  background:var(--surface);border-radius:var(--r);
+  border:1.5px solid var(--border);overflow:hidden;transition:all .25s;
+}
+.admin-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.admin-hdr{padding:16px 18px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--border)}
+.a-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ai-b{background:var(--blue-pale)}
+.ai-g{background:var(--gold-dim)}
+.ai-gr{background:#e8f5e9}
+.ai-p{background:#f3e5f5}
+.a-cat{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--text-3)}
+.a-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:14.5px;font-weight:800;color:var(--text-1)}
+.admin-items{padding:6px 0}
+.a-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 18px;border-bottom:1px solid var(--border);
+  font-size:12.5px;color:var(--text-2);cursor:pointer;
+  transition:background .15s;text-decoration:none;gap:8px;
+}
+.a-item:last-child{border-bottom:none}
+.a-item:hover{background:var(--bg)}
+.a-item-l{display:flex;align-items:center;gap:8px}
+.a-ico{font-size:13px;flex-shrink:0}
+.i-new{font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:var(--gold);color:var(--blue-deep);flex-shrink:0}
+.a-arr{color:var(--text-3);font-size:14px;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px 28px}
+.footer-grid{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr;gap:32px;margin-bottom:32px;
+}
+.f-brand{display:flex;flex-direction:column;gap:12px}
+.f-logo{display:flex;align-items:center;gap:10px}
+.f-logo-icon{
+  width:38px;height:38px;border-radius:9px;flex-shrink:0;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:11px;color:#fff;text-align:center;line-height:1.1;
+}
+.f-logo-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13.5px;color:#fff;line-height:1.25}
+.f-npsn{font-size:10.5px;color:rgba(255,255,255,.35)}
+.f-desc{font-size:12.5px;line-height:1.65;max-width:280px}
+.f-contact{font-size:12px;color:rgba(255,255,255,.45);line-height:1.7}
+.f-col h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;color:#fff;letter-spacing:.6px;text-transform:uppercase;margin-bottom:12px}
+.f-col a{display:block;font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:8px;transition:color .2s}
+.f-col a:hover{color:#fff}
+.footer-bottom{
+  max-width:1200px;margin:0 auto;
+  padding-top:20px;border-top:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;font-size:11.5px;
+}
+.footer-bottom span{color:rgba(255,255,255,.35)}
+.footer-bottom-links{display:flex;gap:16px}
+.footer-bottom-links a{color:rgba(255,255,255,.45);transition:color .2s}
+.footer-bottom-links a:hover{color:#fff}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+.fu{opacity:0;transform:translateY(18px);animation:fu .45s ease forwards}
+@keyframes fu{to{opacity:1;transform:translateY(0)}}
+.fu:nth-child(1){animation-delay:.05s}
+.fu:nth-child(2){animation-delay:.1s}
+.fu:nth-child(3){animation-delay:.15s}
+.fu:nth-child(4){animation-delay:.2s}
+.fu:nth-child(5){animation-delay:.25s}
+.fu:nth-child(6){animation-delay:.3s}
+.fu:nth-child(7){animation-delay:.35s}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — sm: 480px
+═══════════════════════════════════════════ */
+@media(min-width:480px){
+  .tb-right{display:block}
+  .top-banner{flex-wrap:nowrap}
+  .hero h1{letter-spacing:-1.5px}
+  .quick-grid{grid-template-columns:repeat(3,1fr)}
+  .news-grid{grid-template-columns:1fr}
+  .f-col-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — md: 768px
+═══════════════════════════════════════════ */
+@media(min-width:768px){
+  .top-banner{padding:7px 32px;font-size:12px}
+  nav{padding:0 32px;height:68px}
+  .nav-title{font-size:14px}
+  .hamburger{display:none}
+  .nav-drawer{display:none}
+  .nav-links{
+    display:flex;align-items:center;gap:2px;
+    position:static;background:none;padding:0;
+  }
+  .nav-links a{
+    padding:7px 13px;border-radius:8px;font-size:13px;font-weight:500;
+    color:var(--text-2);display:block;border:none;
+  }
+  .nav-links a:hover{background:var(--blue-pale);color:var(--blue-deep)}
+  .nav-links a.active{background:var(--blue-pale);color:var(--blue-bright);font-weight:600}
+  .hero{padding:68px 40px 90px}
+  .hero p{font-size:15.5px}
+  .search-section{margin:-30px auto 0}
+  .search-wrap input{font-size:15px}
+  main{padding:56px 24px 80px}
+  .news-grid{grid-template-columns:3fr 2fr}
+  .footer-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+  .f-col-wrap{display:contents}
+  .footer-bottom{font-size:12px}
+  .quick-grid{grid-template-columns:repeat(3,1fr);gap:14px}
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — lg: 1024px
+═══════════════════════════════════════════ */
+@media(min-width:1024px){
+  nav{padding:0 40px}
+  .top-banner{padding:7px 40px}
+  .hero{padding:80px 40px 100px}
+  .quick-grid{grid-template-columns:repeat(6,1fr)}
+  main{padding:60px 24px 80px}
+}
+
+/* ═══════════════════════════════════════════
+   TOUCH TARGET & ACCESSIBILITY
+═══════════════════════════════════════════ */
+@media(hover:none){
+  .quick-card:hover,.doc-card:hover,.prodi-card:hover,.info-card:hover,
+  .admin-card:hover,.news-card:hover{transform:none}
+}
+:focus-visible{outline:2px solid var(--blue-bright);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <span class="tb-left"><span class="tb-dot"></span>Portal Administrasi Aktif — TP 2024/2025 &nbsp;·&nbsp; NPSN: 20209207</span>
+  <span class="tb-right">📍 Jl. Mayor Syamsu No. 2, Tarogong Kidul, Kab. Garut &nbsp;·&nbsp; Akreditasi A (2023)</span>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">SMK<br>CAM</div>
+    <div class="nav-titles">
+      <span class="nav-title">SMKS Ciledug Al Musaddadiyah</span>
+      <span class="nav-sub">Garut, Jawa Barat · Portal Administrasi</span>
+    </div>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#" class="active">Beranda</a>
+    <a href="#dokumen">Dokumen</a>
+    <a href="#jadwal">Jadwal Ujian</a>
+    <a href="#pengumuman">Pengumuman</a>
+    <a href="#administrasi">Administrasi</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="nav-cta">Login PTK</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="navDrawer" role="dialog" aria-label="Menu navigasi">
+  <div class="nav-drawer-panel">
+    <a href="#" class="active">🏠 Beranda</a>
+    <a href="#dokumen">📄 Dokumen</a>
+    <a href="#jadwal">📅 Jadwal Ujian</a>
+    <a href="#pengumuman">📢 Pengumuman</a>
+    <a href="#administrasi">🗂 Administrasi</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-circles"><span></span><span></span><span></span></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>Portal Resmi Administrasi Sekolah</div>
+    <h1>SMKS Ciledug<br><em>Al Musaddadiyah Garut</em></h1>
+    <div class="hero-info-pills">
+      <span class="pill">🏛 Swasta · SMK</span>
+      <span class="pill">📍 Tarogong Kidul, Kab. Garut</span>
+      <span class="pill">👤 M. Nasrullah Ramdhan, M.Si</span>
+      <span class="pill gold-pill">⭐ Akreditasi A — 2023</span>
+    </div>
+    <p>Akses seluruh dokumen administrasi — surat tugas, SK mengajar, kalender akademik, berita acara ujian, dan informasi lengkap 6 program keahlian.</p>
+    <div class="hero-actions">
+      <a href="#dokumen" class="btn-primary">⬇ Unduh Dokumen</a>
+      <a href="#jadwal" class="btn-ghost">📅 Jadwal Ujian</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">110</div><div class="stat-label">Peserta Didik</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Program Keahlian</div></div>
+      <div class="stat"><div class="stat-num">A</div><div class="stat-label">Akreditasi BAN-PDM</div></div>
+      <div class="stat"><div class="stat-num">2023</div><div class="stat-label">Tahun Akreditasi</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="search" placeholder="Cari SK mengajar, surat tugas, kaldik, berita acara...">
+    <button class="search-btn">Cari</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- IDENTITAS SEKOLAH -->
+  <div style="margin-top:44px">
+    <div class="sh"><div class="sh-left"><div class="sl">Identitas Sekolah</div><div class="st">Data Satuan Pendidikan</div></div></div>
+    <div class="info-grid">
+      <div class="info-card fu"><div class="ic-icon ic-b">🏫</div><div><div class="ic-lbl">Nama Sekolah</div><div class="ic-val">SMKS Ciledug Al Musaddadiyah Garut</div></div></div>
+      <div class="info-card fu"><div class="ic-icon ic-g">🔢</div><div><div class="ic-lbl">NPSN</div><div class="ic-val">20209207</div></div></div>
+      <div class="info-card fu"><div class="ic-icon ic-b">👤</div><div><div class="ic-lbl">Kepala Sekolah</div><div class="ic-val">M. Nasrullah Ramdhan, M.Si</div></div></div>
+      <div class="info-card fu"><div class="ic-icon ic-gr">📍</div><div><div class="ic-lbl">Alamat</div><div class="ic-val">Jl. Mayor Syamsu No. 2, Jayaraga, Tarogong Kidul — 44151</div></div></div>
+      <div class="info-card fu"><div class="ic-icon ic-t">🏛</div><div><div class="ic-lbl">Status / Bentuk</div><div class="ic-val">Swasta · SMK</div></div></div>
+      <div class="info-card fu"><div class="ic-icon ic-g">⭐</div><div><div class="ic-lbl">Akreditasi</div><div class="ic-val">A · SK 036/BAN-PDM/SK/2023</div></div></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM KEAHLIAN -->
+  <div class="sh"><div class="sh-left"><div class="sl">Kompetensi</div><div class="st">Program Keahlian</div></div><span style="font-size:12.5px;color:var(--text-3)">Total 110 Peserta Didik</span></div>
+  <div class="prodi-grid">
+    <div class="prodi-card fu"><div class="prodi-icon ic-b">🔧</div><div style="flex:1"><div class="prodi-name">Teknik Otomotif</div><div class="prodi-pd"><strong>28</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:80%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-t">💻</div><div style="flex:1"><div class="prodi-name">Teknik Jaringan Komputer & Telekomunikasi</div><div class="prodi-pd"><strong>27</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:77%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fce4ec;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🎨</div><div style="flex:1"><div class="prodi-name">Desain Komunikasi Visual</div><div class="prodi-pd"><strong>32</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:91%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-g">🏢</div><div style="flex:1"><div class="prodi-name">Manajemen Perkantoran & Layanan Bisnis</div><div class="prodi-pd"><strong>10</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:29%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-gr">💰</div><div style="flex:1"><div class="prodi-name">Akuntansi & Keuangan Lembaga</div><div class="prodi-pd"><strong>9</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:26%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#f3e5f5;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🛒</div><div style="flex:1"><div class="prodi-name">Pemasaran</div><div class="prodi-pd"><strong>4</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:11%"></div></div></div></div>
+  </div>
+
+  <!-- QUICK ACCESS -->
+  <div class="sh"><div class="sh-left"><div class="sl">Akses Cepat</div><div class="st">Kategori Dokumen</div></div><a href="#" class="section-link">Lihat Semua →</a></div>
+  <div class="quick-grid">
+    <a href="#" class="quick-card fu"><div class="qc-icon qc-b">📝</div><div><div class="qc-label">Surat Tugas</div><div class="qc-count">24 dokumen</div></div></a>
+    <a href="#" class="quick-card fu"><div class="qc-icon qc-g">📋</div><div><div class="qc-label">SK Mengajar</div><div class="qc-count">6 program keahlian</div></div></a>
+    <a href="#" class="quick-card fu"><div class="qc-icon qc-t">📅</div><div><div class="qc-label">Kalender Akademik</div><div class="qc-count">TP 2024/2025</div></div></a>
+    <a href="#" class="quick-card fu"><div class="qc-icon qc-p">📊</div><div><div class="qc-label">Berita Acara Ujian</div><div class="qc-count">PTS &amp; PAS</div></div></a>
+    <a href="#" class="quick-card fu"><div class="qc-icon qc-r">🗂</div><div><div class="qc-label">Administrasi Kelas</div><div class="qc-count">Per program keahlian</div></div></a>
+    <a href="#" class="quick-card fu"><div class="qc-icon qc-gr">✅</div><div><div class="qc-label">Kelengkapan Guru</div><div class="qc-count">RPP, Prota, Prosem</div></div></a>
+  </div>
+
+  <!-- DOKUMEN TERBARU -->
+  <div id="dokumen" class="sh"><div class="sh-left"><div class="sl">Dokumen</div><div class="st">Dokumen Terbaru</div></div><a href="#" class="section-link">Semua →</a></div>
+  <div class="doc-grid">
+    <div class="doc-card">
+      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="badge b-new">BARU</span><span class="doc-date">📅 20 Jan 2025</span></div>
+      <div class="doc-title">SK Pembagian Tugas Mengajar Semester Genap 2024/2025</div>
+      <div class="doc-desc">SK Kepala Sekolah tentang pembagian tugas mengajar seluruh guru untuk 6 program keahlian semester genap.</div>
+      <div class="doc-footer"><span class="doc-size">📎 2.1 MB · 14 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="doc-date">📅 15 Jan 2025</span></div>
+      <div class="doc-title">Kalender Akademik SMK TP 2024/2025</div>
+      <div class="doc-desc">Memuat jadwal belajar, hari libur nasional, dan agenda kegiatan sekolah tahun pelajaran 2024/2025.</div>
+      <div class="doc-footer"><span class="doc-size">📎 980 KB · 4 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-meta"><span class="badge b-doc">DOC</span><span class="badge b-new">BARU</span><span class="doc-date">📅 18 Jan 2025</span></div>
+      <div class="doc-title">Surat Tugas Kepanitiaan PTS Genap 2024/2025</div>
+      <div class="doc-desc">Surat tugas resmi kepanitiaan PTS Genap termasuk pengawas ruang per program keahlian.</div>
+      <div class="doc-footer"><span class="doc-size">📎 410 KB · 3 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-meta"><span class="badge b-xls">XLS</span><span class="doc-date">📅 10 Jan 2025</span></div>
+      <div class="doc-title">Daftar Hadir Guru & Pegawai Januari 2025</div>
+      <div class="doc-desc">Rekap kehadiran seluruh tenaga pendidik dan kependidikan SMKS Ciledug Al Musaddadiyah Garut.</div>
+      <div class="doc-footer"><span class="doc-size">📎 290 KB · 1 sheet</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="doc-date">📅 08 Jan 2025</span></div>
+      <div class="doc-title">Berita Acara Ujian Akhir Semester Ganjil 2024</div>
+      <div class="doc-desc">Berita acara pelaksanaan PAS ganjil beserta daftar hadir pengawas dan catatan kejadian ujian.</div>
+      <div class="doc-footer"><span class="doc-size">📎 760 KB · 10 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-meta"><span class="badge b-doc">DOC</span><span class="doc-date">📅 05 Jan 2025</span></div>
+      <div class="doc-title">Template Surat Izin Tidak Mengajar</div>
+      <div class="doc-desc">Template resmi pengajuan izin tidak hadir mengajar yang diajukan ke Tata Usaha sekolah.</div>
+      <div class="doc-footer"><span class="doc-size">📎 195 KB · 1 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
+    </div>
+  </div>
+
+  <!-- JADWAL UJIAN -->
+  <div id="jadwal" class="jadwal-section">
+    <div class="sh"><div class="sh-left"><div class="sl">Jadwal</div><div class="st">Jadwal Ujian Semester Genap 2024/2025</div></div><a href="#" class="section-link">Unduh →</a></div>
+    <div class="table-scroll">
+      <table class="jadwal-tbl">
+        <thead><tr>
+          <th>Jenis Ujian</th>
+          <th>Tanggal</th>
+          <th>Kelas / Program</th>
+          <th>Waktu</th>
+          <th>Pengawas</th>
+          <th>Status</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>PTS Genap</td><td>17–21 Mar 2025</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>Uji Kompetensi Keahlian (UKK)</td><td>24 Mar–4 Apr 2025</td><td>XII (Semua Prodi)</td><td>08.00–16.00 WIB</td><td>Asesor Industri</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>Ujian Sekolah Teori</td><td>7–18 Apr 2025</td><td>XII (Semua Prodi)</td><td>07.30–09.30 WIB</td><td>Guru Piket</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>PAS Genap (X–XI)</td><td>2–13 Jun 2025</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>PAS Ganjil (lalu)</td><td>2–14 Des 2024</td><td>X, XI, XII</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-do"><span class="stdot"></span>Selesai</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PENGUMUMAN -->
+  <div id="pengumuman" class="news-section">
+    <div class="sh"><div class="sh-left"><div class="sl">Informasi</div><div class="st">Pengumuman & Berita</div></div><a href="#" class="section-link">Semua →</a></div>
+    <div class="news-grid">
+      <div class="news-card">
+        <span class="n-tag nt-warn">⚠ Penting</span>
+        <div class="n-title">Pengumpulan Perangkat Pembelajaran Semester Genap 2024/2025</div>
+        <div class="n-excerpt">Seluruh guru SMKS Ciledug Al Musaddadiyah diwajibkan mengumpulkan RPP/Modul Ajar, Prota, Prosem, ATP, dan Asesmen semester genap paling lambat 25 Januari 2025. Berkas dikumpulkan ke Waka Kurikulum dalam bentuk hardcopy dan softcopy.</div>
+        <div class="n-footer"><span class="n-date">📅 20 Januari 2025</span><a href="#" class="n-read">Baca Selengkapnya →</a></div>
+      </div>
+      <div class="notif-card">
+        <div class="notif-title">🔔 Notifikasi Terbaru</div>
+        <div class="notif-list">
+          <div class="notif-item"><div class="ndot nd-g"></div><div><div class="n-text">SK Mengajar Semester Genap telah diterbitkan</div><div class="n-time">2 jam yang lalu</div></div></div>
+          <div class="notif-item"><div class="ndot nd-b"></div><div><div class="n-text">Jadwal UKK Program Keahlian XII telah diupdate</div><div class="n-time">1 hari yang lalu</div></div></div>
+          <div class="notif-item"><div class="ndot nd-r"></div><div><div class="n-text">Batas upload Rapor Ganjil: 31 Jan 2025</div><div class="n-time">3 hari yang lalu</div></div></div>
+          <div class="notif-item"><div class="ndot nd-b"></div><div><div class="n-text">Template Berita Acara UKK 2025 tersedia</div><div class="n-time">5 hari yang lalu</div></div></div>
+          <div class="notif-item"><div class="ndot nd-g"></div><div><div class="n-text">Rapat koordinasi semester genap: 27 Jan 2025</div><div class="n-time">1 minggu lalu</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMINISTRASI -->
+  <div id="administrasi">
+    <div class="sh"><div class="sh-left"><div class="sl">Kelengkapan</div><div class="st">Administrasi Sekolah</div></div><a href="#" class="section-link">Lihat Semua →</a></div>
+    <div class="admin-grid">
+      <div class="admin-card">
+        <div class="admin-hdr"><div class="a-icon ai-b">📚</div><div><div class="a-cat">Kurikulum</div><div class="a-name">Perangkat Pembelajaran</div></div></div>
+        <div class="admin-items">
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📄</span>RPP / Modul Ajar</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📊</span>Program Tahunan (Prota)</div><span class="i-new">BARU</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📅</span>Program Semester (Prosem)</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">🎯</span>ATP &amp; CP Per Prodi</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📋</span>Silabus Mata Pelajaran</div><span class="a-arr">›</span></a>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-hdr"><div class="a-icon ai-g">✍️</div><div><div class="a-cat">Penilaian</div><div class="a-name">Dokumen Ujian &amp; Nilai</div></div></div>
+        <div class="admin-items">
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📝</span>Kisi-kisi Soal PTS/PAS</div><span class="i-new">BARU</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">🗂</span>Bank Soal Per Prodi</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📊</span>Analisis Hasil Ujian</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📋</span>Daftar Nilai Peserta Didik</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📜</span>Laporan / Rapor Siswa</div><span class="a-arr">›</span></a>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-hdr"><div class="a-icon ai-gr">🏫</div><div><div class="a-cat">Tata Usaha</div><div class="a-name">Surat &amp; Administrasi TU</div></div></div>
+        <div class="admin-items">
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📤</span>Surat Keluar</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📥</span>Surat Masuk</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📝</span>Surat Tugas Dinas Luar</div><span class="i-new">BARU</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">🏷️</span>SK Panitia Kegiatan</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📋</span>Berita Acara Rapat</div><span class="a-arr">›</span></a>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-hdr"><div class="a-icon ai-p">👨‍🏫</div><div><div class="a-cat">Kepegawaian</div><div class="a-name">Kelengkapan PTK</div></div></div>
+        <div class="admin-items">
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">🪪</span>Biodata / DRH Guru</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📜</span>SK Pengangkatan GTY/PTY</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">🎓</span>Sertifikat Pendidik</div><span class="a-arr">›</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">⏱</span>Rekap Jam Mengajar (JJM)</div><span class="i-new">BARU</span></a>
+          <a href="#" class="a-item"><div class="a-item-l"><span class="a-ico">📈</span>PKG / Evaluasi Kinerja Guru</div><span class="a-arr">›</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="f-brand">
+      <div class="f-logo">
+        <div class="f-logo-icon">SMK<br>CAM</div>
+        <div><div class="f-logo-name">SMKS Ciledug Al Musaddadiyah</div><div class="f-npsn">NPSN 20209207 · Akreditasi A</div></div>
+      </div>
+      <p class="f-desc">Portal administrasi resmi. Melayani 110 peserta didik pada 6 program keahlian di Tarogong Kidul, Kabupaten Garut, Jawa Barat.</p>
+      <div class="f-contact">📍 Jl. Mayor Syamsu No. 2, Jayaraga, Kec. Tarogong Kidul, Kab. Garut 44151<br>👤 Kepala Sekolah: M. Nasrullah Ramdhan, M.Si</div>
+    </div>
+    <div class="f-col-wrap">
+      <div class="f-col"><h4>Dokumen</h4><a href="#">SK Mengajar</a><a href="#">Surat Tugas</a><a href="#">Kalender Akademik</a><a href="#">Berita Acara</a><a href="#">Template Surat</a></div>
+      <div class="f-col"><h4>Program Keahlian</h4><a href="#">Teknik Otomotif</a><a href="#">TJK & Telekomunikasi</a><a href="#">Desain Komvis</a><a href="#">Manajemen Perkantoran</a><a href="#">Akuntansi &amp; Keuangan</a></div>
+      <div class="f-col"><h4>Informasi</h4><a href="#">Pengumuman</a><a href="#">Jadwal Ujian</a><a href="#">Profil Sekolah</a><a href="#">Kontak TU</a><a href="https://referensi.data.kemendikdasmen.go.id/snpmb/site/sekolah?npsn=20209207" target="_blank" rel="noopener">Data Kemendikdasmen ↗</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SMKS Ciledug Al Musaddadiyah Garut · NPSN 20209207 · Swasta · Akreditasi A</span>
+    <div class="footer-bottom-links"><a href="#">Privasi</a><a href="#">Panduan</a><a href="#">Kontak</a></div>
+  </div>
+</footer>
+
+<script>
+/* ── HAMBURGER MENU ─────────────────────────── */
+const ham = document.getElementById('hamburger');
+const drawer = document.getElementById('navDrawer');
+let menuOpen = false;
+
+function toggleMenu(state){
+  menuOpen = state ?? !menuOpen;
+  ham.classList.toggle('open', menuOpen);
+  drawer.classList.toggle('open', menuOpen);
+  ham.setAttribute('aria-expanded', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+}
+
+ham.addEventListener('click', () => toggleMenu());
+drawer.addEventListener('click', e => { if(e.target === drawer) toggleMenu(false); });
+
+// Close drawer on link click
+drawer.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => toggleMenu(false));
+});
+
+// Close on Escape
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && menuOpen) toggleMenu(false); });
+
+/* ── ACTIVE NAV LINK ────────────────────────── */
+function setActive(links, href) {
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === href));
+}
+document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => {
+  a.addEventListener('click', function(){ setActive(document.querySelectorAll('.nav-links a, .nav-drawer a'), this.getAttribute('href')); });
+});
+
+/* ── SCROLL-SPY ─────────────────────────────── */
+const sections = ['dokumen','jadwal','pengumuman','administrasi'].map(id => document.getElementById(id)).filter(Boolean);
+const allNavLinks = document.querySelectorAll('.nav-links a, .nav-drawer a');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const href = '#' + e.target.id;
+      allNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === href));
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px' });
+sections.forEach(s => io.observe(s));
+
+/* ── SEARCH ─────────────────────────────────── */
+const searchBtn = document.querySelector('.search-btn');
+const searchInput = document.querySelector('.search-wrap input');
+searchBtn.addEventListener('click', () => {
+  if(!searchInput.value.trim()) return;
+  const orig = searchBtn.textContent;
+  searchBtn.textContent = '🔍 Mencari...';
+  searchBtn.disabled = true;
+  setTimeout(() => { searchBtn.textContent = orig; searchBtn.disabled = false; }, 1400);
+});
+searchInput.addEventListener('keydown', e => { if(e.key === 'Enter') searchBtn.click(); });
+
+/* ── DOWNLOAD FEEDBACK ──────────────────────── */
+document.querySelectorAll('.btn-dl').forEach(btn => {
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    if(this.disabled) return;
+    const orig = this.innerHTML;
+    this.innerHTML = '✓ Mengunduh...';
+    this.style.cssText += 'background:#1b5e20;color:#fff';
+    this.disabled = true;
+    setTimeout(() => { this.innerHTML = orig; this.style.cssText = ''; this.disabled = false; }, 2000);
+  });
+});
+
+/* ── INTERSECTION OBSERVER (fade-up) ───────── */
+const fuObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.style.animationPlayState = 'running'; fuObs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = 'paused'; fuObs.observe(el); });
+</script>
+</body>
+</html>
