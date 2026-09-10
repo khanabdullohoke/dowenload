@@ -546,15 +546,27 @@ main{max-width:1200px;margin:0 auto;padding:48px 16px 72px}
 .admin-close:hover{background:rgba(255,255,255,.28)}
 .admin-body{padding:20px 22px 26px}
 
-.admin-login{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:10px auto}
+.admin-login{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:6px auto 10px}
+.admin-lock-icon{
+  width:52px;height:52px;margin:0 auto 2px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  box-shadow:0 8px 20px rgba(10,46,110,.28);
+}
 .admin-login p{font-size:12.5px;color:var(--text-3);text-align:center;line-height:1.6}
 .admin-login input{
   padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;
-  font-family:'DM Sans',sans-serif;
+  font-family:'DM Sans',sans-serif;text-align:center;letter-spacing:1px;
 }
-.admin-login input:focus{outline:none;border-color:var(--blue-bright)}
+.admin-login input:focus{outline:none;border-color:var(--blue-bright);letter-spacing:2px}
 .admin-login .admin-err{color:#c62828;font-size:12px;text-align:center;display:none}
 .admin-login .admin-hint{font-size:11px;color:var(--text-3);text-align:center;background:var(--blue-pale);padding:8px 10px;border-radius:8px}
+.auth-badge{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:11px;font-weight:700;padding:7px 12px;border-radius:999px;margin:0 auto;
+}
+.auth-badge.ab-secure{background:#e6f6ec;color:#1b6b3a;border:1px solid #b9e6c8}
+.auth-badge.ab-demo{background:#fff4e0;color:#96650a;border:1px solid #f2d99a}
 
 .admin-tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1.5px solid var(--border);margin-bottom:18px;padding-bottom:1px}
 .admin-tab{
@@ -1054,11 +1066,12 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
       </div>
       <div class="admin-body">
         <div class="admin-login">
+          <div class="admin-lock-icon">🔐</div>
           <p>Masuk sebagai admin untuk memperbarui dokumen, direktori guru &amp; staff, dan data program keahlian pada portal ini.</p>
           <input type="password" id="adminPass" placeholder="Masukkan kata sandi admin" autocomplete="off">
           <div class="admin-err" id="adminErr"></div>
           <button class="btn-a-primary" id="adminLoginBtn" type="button">Masuk Panel Admin</button>
-          <div class="admin-hint" id="adminAuthHint">Memeriksa mode keamanan…</div>
+          <div class="auth-badge" id="adminAuthHint" style="display:none"></div>
         </div>
       </div>
     </div>
@@ -1171,10 +1184,10 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
         <!-- TAB: SYNC -->
         <div class="admin-pane" data-pane="sync">
-          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:10px;line-height:1.6">Halaman ini statis (tanpa server/database), jadi perubahan hanya tersimpan selama sesi berjalan kecuali dihubungkan ke Google Sheets. Gunakan tombol di bawah untuk mengunduh data sebagai file JSON, atau sinkronkan ke Google Sheets bila sudah tersambung.</p>
+          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:10px;line-height:1.6">Perubahan tersimpan otomatis selama server admin tersambung. Gunakan tombol di bawah untuk mengunduh cadangan data sebagai file JSON, atau tarik ulang data terbaru dari server.</p>
           <div class="admin-ref-item" style="margin-bottom:14px">
-            <div><strong>Status Google Sheets</strong><span id="gsStatus">Belum terhubung — isi WEBAPP_URL di kode sumber.</span></div>
-            <button type="button" class="btn-a-ghost" id="gsPullBtn" style="flex-shrink:0">🔄 Tarik dari Sheets</button>
+            <div><strong>Status Server</strong><span id="gsStatus">Belum terhubung — isi WEBAPP_URL di kode sumber.</span></div>
+            <button type="button" class="btn-a-ghost" id="gsPullBtn" style="flex-shrink:0">🔄 Tarik Data Terbaru</button>
           </div>
           <div class="admin-actions">
             <button type="button" class="btn-a-primary" id="exportBtn">⬇ Unduh Data (JSON)</button>
@@ -1280,10 +1293,10 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
 (function(){
   // Hash SHA-256 dari kata sandi mode demo lokal ("admin123") — dipakai HANYA jika
   // WEBAPP_URL belum diisi. Kata sandi asli tidak pernah tersimpan di source.
-  // Untuk keamanan penuh (direkomendasikan), sambungkan ke Google Sheets (lihat Code.gs)
+  // Untuk keamanan penuh (direkomendasikan), sambungkan ke server admin (lihat Code.gs)
   // agar verifikasi kata sandi dilakukan di server, bukan di browser.
   const LOCAL_ADMIN_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // sha256("admin123")
-  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbySVko842V1vYA_ywqfFzinOgjfmAS79CD1EzDzor8qfRaGc3AOvFP3nuqPO1u4X1Xk/exec'; // tempel URL Web App Google Apps Script (diakhiri /exec) di sini untuk login & sinkron aman
+  const WEBAPP_URL = ''; // tempel URL Web App Google Apps Script (diakhiri /exec) di sini untuk login & sinkron aman
   const LOCAL_MAX_FAILS = 5;
   const LOCAL_LOCKOUT_MS = 60 * 1000;
 
@@ -1323,7 +1336,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     });
   }
 
-  /* ── SINKRON GOOGLE SHEETS (opsional, isi WEBAPP_URL di atas) ── */
+  /* ── SINKRONISASI SERVER ADMIN (opsional, isi WEBAPP_URL di atas) ── */
   const gsActive = () => !!WEBAPP_URL;
 
   function setGsStatus(msg){
@@ -1333,7 +1346,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
 
   async function gsFetchAll(){
     if(!gsActive()) return;
-    setGsStatus('Menyinkronkan dari Google Sheets...');
+    setGsStatus('Menyinkronkan data terbaru...');
     try {
       const res = await fetch(WEBAPP_URL, { method: 'GET' });
       const json = await res.json();
@@ -1346,12 +1359,12 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
         state.kelas.forEach(applyKelasToGrid);
         renderKelasList();
         setGsStatus('Tersambung — data terakhir ditarik ' + new Date().toLocaleTimeString('id-ID'));
-        toast('Data dimuat dari Google Sheets');
+        toast('Data terbaru berhasil dimuat');
       } else {
         setGsStatus('Gagal memuat data dari Sheets: ' + (json.error || 'unknown'));
       }
     } catch(err){
-      setGsStatus('Tidak dapat menghubungi Google Sheets (cek WEBAPP_URL / izin deployment).');
+      setGsStatus('Tidak dapat menghubungi server (cek WEBAPP_URL / izin deployment).');
     }
   }
 
@@ -1365,14 +1378,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       });
       const json = await res.json();
       if(json.ok){
-        setGsStatus('Tersinkron ke Google Sheets ' + new Date().toLocaleTimeString('id-ID'));
+        setGsStatus('Tersinkron ke server ' + new Date().toLocaleTimeString('id-ID'));
       } else if(json.error === 'unauthorized'){
         handleSessionExpired();
       } else {
         setGsStatus('Gagal menyinkron: ' + (json.error || 'unknown'));
       }
     } catch(err){
-      setGsStatus('Gagal menyinkron ke Google Sheets (tersimpan lokal saja).');
+      setGsStatus('Gagal menyinkron ke server (tersimpan lokal saja).');
     }
   }
 
@@ -1386,14 +1399,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       });
       const json = await res.json();
       if(json.ok){
-        setGsStatus('Tersinkron ke Google Sheets ' + new Date().toLocaleTimeString('id-ID'));
+        setGsStatus('Tersinkron ke server ' + new Date().toLocaleTimeString('id-ID'));
       } else if(json.error === 'unauthorized'){
         handleSessionExpired();
       } else {
         setGsStatus('Gagal menyinkron penghapusan: ' + (json.error || 'unknown'));
       }
     } catch(err){
-      setGsStatus('Gagal menyinkron penghapusan ke Google Sheets.');
+      setGsStatus('Gagal menyinkron penghapusan ke server.');
     }
   }
 
@@ -1421,9 +1434,15 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#adminPanelView').style.display = 'none';
     $('#adminErr').style.display = 'none';
     $('#adminPass').value = '';
-    $('#adminAuthHint').textContent = gsActive()
-      ? '🔒 Autentikasi diverifikasi di server (Google Sheets) — kata sandi tidak tersimpan di halaman ini.'
-      : '⚠️ Mode demo lokal (belum tersambung Google Sheets). Untuk keamanan penuh, atur WEBAPP_URL agar login diverifikasi di server.';
+    const badge = $('#adminAuthHint');
+    if(gsActive()){
+      // mode aman terverifikasi — tidak perlu menampilkan keterangan apa pun ke pengunjung
+      badge.style.display = 'none';
+    } else {
+      badge.className = 'auth-badge ab-demo';
+      badge.textContent = '⚠️ Mode demo — hubungkan ke server untuk keamanan penuh';
+      badge.style.display = 'flex';
+    }
     updateLoginLockUI();
   }
   function showPanel(){
@@ -1610,10 +1629,10 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     const fileInput = $('#dokFile');
     if(!hint || !fileInput) return;
     if(gsActive()){
-      hint.textContent = '📁 File akan diunggah ke Google Drive sekolah lewat backend, lalu link unduhnya terisi otomatis. Maks. ±10 MB.';
+      hint.textContent = '📁 File akan diunggah ke penyimpanan server, lalu link unduhnya terisi otomatis. Maks. ±10 MB.';
       fileInput.disabled = false;
     } else {
-      hint.textContent = '⚠️ Upload file butuh koneksi Google Sheets/Drive (isi WEBAPP_URL). Untuk sekarang, isi "Link Unduh" secara manual dengan tautan eksternal (mis. Google Drive yang kamu buat sendiri).';
+      hint.textContent = '⚠️ Upload file butuh koneksi server admin (isi WEBAPP_URL). Untuk sekarang, isi "Link Unduh" secara manual dengan tautan eksternal.';
       fileInput.disabled = true;
     }
   }
@@ -1631,7 +1650,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     const file = e.target.files[0];
     const statusEl = $('#dokUploadStatus');
     if(!file) return;
-    if(!gsActive()){ statusEl.textContent = 'Upload butuh koneksi Google Sheets/Drive.'; e.target.value = ''; return; }
+    if(!gsActive()){ statusEl.textContent = 'Upload butuh koneksi server admin.'; e.target.value = ''; return; }
     if(!isAuthed || !sessionToken){ statusEl.textContent = 'Sesi admin tidak valid, login ulang.'; e.target.value = ''; return; }
     if(file.size > 10 * 1024 * 1024){
       statusEl.textContent = '❌ File melebihi 10 MB. Gunakan link eksternal.';
@@ -1661,7 +1680,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
         if(EXT_TO_TIPE[ext]) $('#dokTipe').value = EXT_TO_TIPE[ext];
         if(!$('#dokJudul').value.trim()) $('#dokJudul').value = file.name.replace(/\.[^.]+$/, '');
         statusEl.textContent = '✅ Terunggah: ' + json.fileName;
-        toast('File berhasil diunggah ke Google Drive');
+        toast('File berhasil diunggah ke server');
       } else if(json.error === 'unauthorized'){
         statusEl.textContent = '❌ Sesi berakhir, login ulang.';
         handleSessionExpired();
