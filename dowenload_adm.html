@@ -12,25 +12,27 @@
    DESIGN TOKENS
 ═══════════════════════════════════════════ */
 :root {
-  --blue-deep:   #0b3d91;
-  --blue-mid:    #1565c0;
-  --blue-bright: #1e88e5;
-  --blue-light:  #90caf9;
-  --blue-pale:   #e3f2fd;
-  --gold:        #ffb300;
-  --gold-light:  #ffd54f;
-  --gold-dim:    #fff8e1;
-  --bg:          #f5f9ff;
+  --blue-deep:   #0a2e6e;
+  --blue-mid:    #123e8f;
+  --blue-bright: #1c63c4;
+  --blue-light:  #8fb8ea;
+  --blue-pale:   #eef3fc;
+  --navy-ink:    #071b3d;
+  --gold:        #c99a3d;
+  --gold-light:  #e3bd6a;
+  --gold-dim:    #faf3e3;
+  --bg:          #f6f8fc;
   --surface:     #ffffff;
-  --border:      #daeaff;
-  --text-1:      #0d1b3e;
-  --text-2:      #2c3e6b;
-  --text-3:      #6b7fa8;
-  --sh-sm: 0 2px 8px rgba(11,61,145,.08);
-  --sh-md: 0 6px 24px rgba(11,61,145,.12);
-  --sh-lg: 0 16px 48px rgba(11,61,145,.16);
-  --r: 14px;
-  --nav-h: 64px;
+  --border:      #e2e9f5;
+  --text-1:      #0c1a35;
+  --text-2:      #354569;
+  --text-3:      #7482a3;
+  --sh-sm: 0 2px 10px rgba(10,25,60,.06);
+  --sh-md: 0 10px 28px rgba(10,25,60,.10);
+  --sh-lg: 0 24px 60px rgba(10,25,60,.18);
+  --r: 16px;
+  --r-sm: 11px;
+  --nav-h: 68px;
 }
 
 /* ═══════════════════════════════════════════
@@ -46,11 +48,11 @@ a{color:inherit;text-decoration:none}
    TOP BANNER
 ═══════════════════════════════════════════ */
 .top-banner{
-  background:var(--blue-deep);
-  padding:7px 20px;
+  background:linear-gradient(90deg,var(--navy-ink),var(--blue-deep) 55%,var(--navy-ink));
+  padding:8px 20px;
   display:flex;align-items:center;justify-content:space-between;
-  font-size:11.5px;color:rgba(255,255,255,.65);
-  gap:12px;flex-wrap:wrap;
+  font-size:11.5px;color:rgba(255,255,255,.68);
+  gap:12px;flex-wrap:wrap;letter-spacing:.1px;
 }
 .tb-left{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .tb-right{display:none}
@@ -61,7 +63,9 @@ a{color:inherit;text-decoration:none}
    NAVBAR
 ═══════════════════════════════════════════ */
 nav{
-  background:var(--surface);
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
   border-bottom:1px solid var(--border);
   height:var(--nav-h);
   padding:0 16px;
@@ -73,26 +77,28 @@ nav{
 .nav-logo{
   width:40px;height:40px;flex-shrink:0;
   background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
-  border-radius:10px;
+  border-radius:11px;
   display:flex;align-items:center;justify-content:center;
   font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:12px;
   color:#fff;text-align:center;line-height:1.1;
-  box-shadow:0 4px 10px rgba(30,136,229,.3);
+  box-shadow:0 4px 12px rgba(10,46,110,.35);
   position:relative;overflow:hidden;
 }
-.nav-logo::after{content:'';position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:var(--gold);opacity:.7}
+.nav-logo::after{content:'';position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:var(--gold);opacity:.75}
 .nav-titles{display:flex;flex-direction:column;line-height:1.2;min-width:0}
 .nav-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;color:var(--blue-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-sub{font-size:10.5px;color:var(--text-3);font-weight:500}
 .nav-links{display:none}
 .nav-actions{display:flex;align-items:center;gap:8px}
 .nav-cta{
-  background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
-  color:#fff;padding:8px 16px;border-radius:8px;
-  font-size:12.5px;font-weight:600;white-space:nowrap;
-  box-shadow:0 3px 10px rgba(30,136,229,.3);transition:all .2s;
+  background:linear-gradient(135deg,var(--navy-ink),var(--blue-deep));
+  color:var(--gold-light);padding:9px 16px;border-radius:var(--r-sm);
+  font-size:12.5px;font-weight:700;white-space:nowrap;letter-spacing:.2px;
+  border:1px solid rgba(201,154,61,.5);
+  box-shadow:0 3px 12px rgba(7,27,61,.3);transition:all .2s;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
 }
-.nav-cta:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(30,136,229,.4)}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(7,27,61,.4);border-color:var(--gold)}
 .hamburger{
   display:flex;flex-direction:column;justify-content:center;gap:5px;
   width:36px;height:36px;padding:6px;cursor:pointer;
@@ -468,6 +474,169 @@ main{max-width:1200px;margin:0 auto;padding:48px 16px 72px}
 .a-arr{color:var(--text-3);font-size:14px;flex-shrink:0}
 
 /* ═══════════════════════════════════════════
+   GURU & STAFF DIREKTORI
+═══════════════════════════════════════════ */
+.guru-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.guru-toolbar a{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--surface);border:1.5px solid var(--border);
+  padding:8px 14px;border-radius:9px;font-size:12.5px;font-weight:600;color:var(--blue-deep);
+  transition:all .2s;
+}
+.guru-toolbar a:hover{border-color:var(--blue-light);background:var(--blue-pale)}
+.guru-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:14px;margin-bottom:48px}
+.guru-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:16px;display:flex;gap:12px;align-items:flex-start;transition:all .2s}
+.guru-card:hover{box-shadow:var(--sh-md);border-color:var(--blue-light)}
+.guru-avatar{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:14px;
+}
+.guru-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13.5px;color:var(--text-1);line-height:1.3}
+.guru-role{font-size:11.5px;color:var(--text-3);margin-top:2px;margin-bottom:8px}
+.guru-links{display:flex;gap:8px;flex-wrap:wrap}
+.guru-links a{font-size:11px;font-weight:600;color:var(--blue-bright);background:var(--blue-pale);padding:4px 9px;border-radius:6px}
+.guru-empty{grid-column:1/-1;text-align:center;padding:30px 16px;color:var(--text-3);font-size:13px;border:1.5px dashed var(--border);border-radius:var(--r)}
+
+/* ═══════════════════════════════════════════
+   AKSEN KARTU PREMIUM (hover top-line)
+═══════════════════════════════════════════ */
+.doc-card,.admin-card,.prodi-card,.info-card,.news-card,.guru-card,.quick-card{position:relative}
+.doc-card::before,.admin-card::before,.prodi-card::before,.info-card::before,.news-card::before,.guru-card::before,.quick-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;
+  background:linear-gradient(90deg,var(--blue-bright),var(--gold));opacity:0;transform:scaleX(.4);
+  transform-origin:left;transition:opacity .25s,transform .3s;
+}
+.doc-card:hover::before,.admin-card:hover::before,.prodi-card:hover::before,.info-card:hover::before,
+.news-card:hover::before,.guru-card:hover::before,.quick-card:hover::before{opacity:1;transform:scaleX(1)}
+
+/* ═══════════════════════════════════════════
+   ADMIN — FAB + MODAL
+═══════════════════════════════════════════ */
+.fab-admin{
+  position:fixed;bottom:20px;right:20px;z-index:300;
+  display:flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));
+  color:#fff;border:none;padding:13px 18px;border-radius:999px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;
+  box-shadow:0 8px 24px rgba(11,61,145,.35);cursor:pointer;transition:all .2s;
+}
+.fab-admin:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(11,61,145,.45)}
+.fab-admin .fab-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+
+.admin-overlay{
+  position:fixed;inset:0;background:rgba(11,20,45,.55);backdrop-filter:blur(3px);
+  z-index:400;display:none;align-items:flex-start;justify-content:center;
+  padding:20px 12px;overflow-y:auto;
+}
+.admin-overlay.open{display:flex}
+.admin-modal{
+  background:var(--surface);border-radius:16px;width:100%;max-width:720px;
+  margin:20px auto 40px;box-shadow:var(--sh-lg);overflow:hidden;
+  animation:fu .25s ease;
+}
+.admin-modal-hdr{
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));
+  color:#fff;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;
+}
+.admin-modal-hdr h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15.5px;font-weight:800;display:flex;align-items:center;gap:8px}
+.admin-modal-hdr span{font-size:11.5px;color:rgba(255,255,255,.7);font-weight:500}
+.admin-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0}
+.admin-close:hover{background:rgba(255,255,255,.28)}
+.admin-body{padding:20px 22px 26px}
+
+.admin-login{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:10px auto}
+.admin-login p{font-size:12.5px;color:var(--text-3);text-align:center;line-height:1.6}
+.admin-login input{
+  padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;
+  font-family:'DM Sans',sans-serif;
+}
+.admin-login input:focus{outline:none;border-color:var(--blue-bright)}
+.admin-login .admin-err{color:#c62828;font-size:12px;text-align:center;display:none}
+.admin-login .admin-hint{font-size:11px;color:var(--text-3);text-align:center;background:var(--blue-pale);padding:8px 10px;border-radius:8px}
+
+.admin-tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1.5px solid var(--border);margin-bottom:18px;padding-bottom:1px}
+.admin-tab{
+  padding:9px 14px;font-size:12.5px;font-weight:700;color:var(--text-3);
+  border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;
+  font-family:'DM Sans',sans-serif;
+}
+.admin-tab.active{color:var(--blue-deep);border-color:var(--blue-bright)}
+.admin-pane{display:none}
+.admin-pane.active{display:block}
+
+.admin-ref-list{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
+.admin-ref-item{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;
+}
+.admin-ref-item div{font-size:12.5px;color:var(--text-2);line-height:1.4}
+.admin-ref-item strong{display:block;font-size:12.5px;color:var(--text-1);font-family:'Plus Jakarta Sans',sans-serif}
+.admin-ref-item a{
+  flex-shrink:0;font-size:11.5px;font-weight:700;color:#fff;background:var(--blue-bright);
+  padding:7px 12px;border-radius:7px;white-space:nowrap;
+}
+
+.admin-form{display:flex;flex-direction:column;gap:12px}
+.admin-form .form-row{display:grid;grid-template-columns:1fr;gap:12px}
+.admin-form label{font-size:11.5px;font-weight:700;color:var(--text-2);margin-bottom:5px;display:block}
+.admin-form input,.admin-form select,.admin-form textarea{
+  width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;
+  font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text-1);background:var(--surface);
+}
+.admin-form input:focus,.admin-form select:focus,.admin-form textarea:focus{outline:none;border-color:var(--blue-bright)}
+.admin-form textarea{resize:vertical;min-height:56px}
+.admin-checkline{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-2)}
+.admin-checkline input{width:auto}
+.dok-upload-box{border:1.5px dashed var(--border);border-radius:var(--r-sm);padding:12px 14px;background:var(--bg)}
+.dok-upload-box label{font-size:11.5px;font-weight:700;color:var(--text-2);margin-bottom:8px;display:block}
+.dok-upload-box input[type=file]{
+  font-size:12px;color:var(--text-2);max-width:100%;
+}
+.dok-upload-box input[type=file]::file-selector-button{
+  background:var(--blue-pale);border:1.5px solid var(--border);color:var(--blue-deep);
+  padding:7px 12px;border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer;margin-right:10px;
+}
+.dok-upload-box input[type=file]::file-selector-button:hover{background:var(--border)}
+.admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.btn-a-primary,.btn-a-ghost,.btn-a-danger{
+  padding:10px 16px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;border:none;
+  font-family:'DM Sans',sans-serif;
+}
+.btn-a-primary{background:linear-gradient(135deg,var(--blue-deep),var(--blue-bright));color:#fff}
+.btn-a-primary:hover{opacity:.92}
+.btn-a-ghost{background:var(--bg);border:1.5px solid var(--border);color:var(--text-2)}
+.btn-a-ghost:hover{background:var(--blue-pale)}
+.btn-a-danger{background:#fdecea;color:#c62828}
+.btn-a-danger:hover{background:#f9d6d3}
+
+.admin-list{display:flex;flex-direction:column;gap:8px;margin-top:16px;max-height:280px;overflow-y:auto}
+.admin-list-item{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--bg);
+}
+.admin-list-item .li-main{min-width:0}
+.admin-list-item .li-title{font-size:12.5px;font-weight:700;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-list-item .li-sub{font-size:11px;color:var(--text-3);margin-top:2px}
+.admin-list-item .li-btns{display:flex;gap:6px;flex-shrink:0}
+.admin-list-item .li-btns button{
+  width:28px;height:28px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface);
+  cursor:pointer;font-size:12px;
+}
+.admin-list-item .li-btns button:hover{background:var(--blue-pale)}
+.admin-toast{
+  position:fixed;bottom:90px;right:20px;z-index:500;
+  background:#1b5e20;color:#fff;padding:11px 18px;border-radius:10px;font-size:12.5px;font-weight:600;
+  box-shadow:var(--sh-md);opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;
+}
+.admin-toast.show{opacity:1;transform:translateY(0)}
+
+@media(min-width:560px){
+  .admin-form .form-row-2{grid-template-columns:1fr 1fr}
+}
+
+/* ═══════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════ */
 footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px 28px}
@@ -582,7 +751,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
 <!-- TOP BANNER -->
 <div class="top-banner">
-  <span class="tb-left"><span class="tb-dot"></span>Portal Administrasi Aktif — TP 2024/2025 &nbsp;·&nbsp; NPSN: 20209207</span>
+  <span class="tb-left"><span class="tb-dot"></span>Portal Administrasi Aktif — TP 2026/2027 &nbsp;·&nbsp; NPSN: 20209207</span>
   <span class="tb-right">📍 Jl. Mayor Syamsu No. 2, Tarogong Kidul, Kab. Garut &nbsp;·&nbsp; Akreditasi A (2023)</span>
 </div>
 
@@ -601,9 +770,10 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     <a href="#jadwal">Jadwal Ujian</a>
     <a href="#pengumuman">Pengumuman</a>
     <a href="#administrasi">Administrasi</a>
+    <a href="#direktori">Guru &amp; Staff</a>
   </div>
   <div class="nav-actions">
-    <a href="#" class="nav-cta">Login PTK</a>
+    <button type="button" class="nav-cta" id="navAdminBtn">🔐 Login Admin</button>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -618,6 +788,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     <a href="#jadwal">📅 Jadwal Ujian</a>
     <a href="#pengumuman">📢 Pengumuman</a>
     <a href="#administrasi">🗂 Administrasi</a>
+    <a href="#direktori">🪪 Guru &amp; Staff</a>
   </div>
 </div>
 
@@ -634,14 +805,14 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
       <span class="pill">👤 M. Nasrullah Ramdhan, M.Si</span>
       <span class="pill gold-pill">⭐ Akreditasi A — 2023</span>
     </div>
-    <p>Akses seluruh dokumen administrasi — surat tugas, SK mengajar, kalender akademik, berita acara ujian, dan informasi lengkap 6 program keahlian.</p>
+    <p>Akses seluruh dokumen administrasi — surat tugas, SK mengajar, kalender akademik, berita acara ujian, dan informasi lengkap 7 program keahlian.</p>
     <div class="hero-actions">
       <a href="#dokumen" class="btn-primary">⬇ Unduh Dokumen</a>
       <a href="#jadwal" class="btn-ghost">📅 Jadwal Ujian</a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">110</div><div class="stat-label">Peserta Didik</div></div>
-      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Program Keahlian</div></div>
+      <div class="stat"><div class="stat-num">217</div><div class="stat-label">Peserta Didik</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Program Keahlian</div></div>
       <div class="stat"><div class="stat-num">A</div><div class="stat-label">Akreditasi BAN-PDM</div></div>
       <div class="stat"><div class="stat-num">2023</div><div class="stat-label">Tahun Akreditasi</div></div>
     </div>
@@ -674,14 +845,15 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
   </div>
 
   <!-- PROGRAM KEAHLIAN -->
-  <div class="sh"><div class="sh-left"><div class="sl">Kompetensi</div><div class="st">Program Keahlian</div></div><span style="font-size:12.5px;color:var(--text-3)">Total 277 Peserta Didik</span></div>
+  <div class="sh"><div class="sh-left"><div class="sl">Kompetensi</div><div class="st">Program Keahlian</div></div><span style="font-size:12.5px;color:var(--text-3)">Total 217 Peserta Didik</span></div>
   <div class="prodi-grid">
-    <div class="prodi-card fu"><div class="prodi-icon ic-b">🔧</div><div style="flex:1"><div class="prodi-name">Teknik Otomotif</div><div class="prodi-pd"><strong>28</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:80%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon ic-t">💻</div><div style="flex:1"><div class="prodi-name">Teknik Jaringan Komputer & Telekomunikasi</div><div class="prodi-pd"><strong>27</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:77%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fce4ec;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🎨</div><div style="flex:1"><div class="prodi-name">Desain Komunikasi Visual</div><div class="prodi-pd"><strong>32</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:91%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon ic-g">🏢</div><div style="flex:1"><div class="prodi-name">Manajemen Perkantoran & Layanan Bisnis</div><div class="prodi-pd"><strong>10</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:29%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon ic-gr">💰</div><div style="flex:1"><div class="prodi-name">Akuntansi & Keuangan Lembaga</div><div class="prodi-pd"><strong>9</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:26%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon" style="background:#f3e5f5;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🛒</div><div style="flex:1"><div class="prodi-name">Pemasaran</div><div class="prodi-pd"><strong>4</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:11%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fce4ec;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🎨</div><div style="flex:1"><div class="prodi-name">Desain Komunikasi Visual</div><div class="prodi-pd"><strong>45</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:100%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-t">💻</div><div style="flex:1"><div class="prodi-name">Teknik Komputer & Jaringan</div><div class="prodi-pd"><strong>38</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:84%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#f3e5f5;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🛒</div><div style="flex:1"><div class="prodi-name">Bisnis Digital</div><div class="prodi-pd"><strong>34</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:76%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-b">🚗</div><div style="flex:1"><div class="prodi-name">Teknik Kendaraan Ringan (TKR)</div><div class="prodi-pd"><strong>30</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:67%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-g">🏢</div><div style="flex:1"><div class="prodi-name">Manajemen Perkantoran</div><div class="prodi-pd"><strong>26</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:58%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fff3e0;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🚵</div><div style="flex:1"><div class="prodi-name">Teknik Sepeda Motor (TSM)</div><div class="prodi-pd"><strong>22</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:49%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-gr">💰</div><div style="flex:1"><div class="prodi-name">Akuntansi Keuangan Lembaga</div><div class="prodi-pd"><strong>22</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:49%"></div></div></div></div>
   </div>
 
   <!-- QUICK ACCESS -->
@@ -689,7 +861,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
   <div class="quick-grid">
     <a href="#" class="quick-card fu"><div class="qc-icon qc-b">📝</div><div><div class="qc-label">Surat Tugas</div><div class="qc-count">24 dokumen</div></div></a>
     <a href="#" class="quick-card fu"><div class="qc-icon qc-g">📋</div><div><div class="qc-label">SK Mengajar</div><div class="qc-count">7 program keahlian</div></div></a>
-    <a href="#" class="quick-card fu"><div class="qc-icon qc-t">📅</div><div><div class="qc-label">Kalender Akademik</div><div class="qc-count">TP 2024/2025</div></div></a>
+    <a href="#" class="quick-card fu"><div class="qc-icon qc-t">📅</div><div><div class="qc-label">Kalender Akademik</div><div class="qc-count">TP 2026/2027</div></div></a>
     <a href="#" class="quick-card fu"><div class="qc-icon qc-p">📊</div><div><div class="qc-label">Berita Acara Ujian</div><div class="qc-count">PTS &amp; PAS</div></div></a>
     <a href="#" class="quick-card fu"><div class="qc-icon qc-r">🗂</div><div><div class="qc-label">Administrasi Kelas</div><div class="qc-count">Per program keahlian</div></div></a>
     <a href="#" class="quick-card fu"><div class="qc-icon qc-gr">✅</div><div><div class="qc-label">Kelengkapan Guru</div><div class="qc-count">RPP, Prota, Prosem</div></div></a>
@@ -699,37 +871,37 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
   <div id="dokumen" class="sh"><div class="sh-left"><div class="sl">Dokumen</div><div class="st">Dokumen Terbaru</div></div><a href="#" class="section-link">Semua →</a></div>
   <div class="doc-grid">
     <div class="doc-card">
-      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="badge b-new">BARU</span><span class="doc-date">📅 20 Jan 2025</span></div>
-      <div class="doc-title">SK Pembagian Tugas Mengajar Semester Genap 2024/2025</div>
-      <div class="doc-desc">SK Kepala Sekolah tentang pembagian tugas mengajar seluruh guru untuk 6 program keahlian semester genap.</div>
+      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="badge b-new">BARU</span><span class="doc-date">📅 20 Jan 2027</span></div>
+      <div class="doc-title">SK Pembagian Tugas Mengajar Semester Genap 2026/2027</div>
+      <div class="doc-desc">SK Kepala Sekolah tentang pembagian tugas mengajar seluruh guru untuk 7 program keahlian semester genap.</div>
       <div class="doc-footer"><span class="doc-size">📎 2.1 MB · 14 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
     </div>
     <div class="doc-card">
-      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="doc-date">📅 15 Jan 2025</span></div>
-      <div class="doc-title">Kalender Akademik SMK TP 2024/2025</div>
-      <div class="doc-desc">Memuat jadwal belajar, hari libur nasional, dan agenda kegiatan sekolah tahun pelajaran 2024/2025.</div>
+      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="doc-date">📅 15 Jan 2027</span></div>
+      <div class="doc-title">Kalender Akademik SMK TP 2026/2027</div>
+      <div class="doc-desc">Memuat jadwal belajar, hari libur nasional, dan agenda kegiatan sekolah tahun pelajaran 2026/2027.</div>
       <div class="doc-footer"><span class="doc-size">📎 980 KB · 4 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
     </div>
     <div class="doc-card">
-      <div class="doc-meta"><span class="badge b-doc">DOC</span><span class="badge b-new">BARU</span><span class="doc-date">📅 18 Jan 2025</span></div>
-      <div class="doc-title">Surat Tugas Kepanitiaan PTS Genap 2024/2025</div>
+      <div class="doc-meta"><span class="badge b-doc">DOC</span><span class="badge b-new">BARU</span><span class="doc-date">📅 18 Jan 2027</span></div>
+      <div class="doc-title">Surat Tugas Kepanitiaan PTS Genap 2026/2027</div>
       <div class="doc-desc">Surat tugas resmi kepanitiaan PTS Genap termasuk pengawas ruang per program keahlian.</div>
       <div class="doc-footer"><span class="doc-size">📎 410 KB · 3 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
     </div>
     <div class="doc-card">
-      <div class="doc-meta"><span class="badge b-xls">XLS</span><span class="doc-date">📅 10 Jan 2025</span></div>
-      <div class="doc-title">Daftar Hadir Guru & Pegawai Januari 2025</div>
+      <div class="doc-meta"><span class="badge b-xls">XLS</span><span class="doc-date">📅 10 Jan 2027</span></div>
+      <div class="doc-title">Daftar Hadir Guru & Pegawai Januari 2027</div>
       <div class="doc-desc">Rekap kehadiran seluruh tenaga pendidik dan kependidikan SMKS Ciledug Al Musaddadiyah Garut.</div>
       <div class="doc-footer"><span class="doc-size">📎 290 KB · 1 sheet</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
     </div>
     <div class="doc-card">
-      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="doc-date">📅 08 Jan 2025</span></div>
-      <div class="doc-title">Berita Acara Ujian Akhir Semester Ganjil 2024</div>
+      <div class="doc-meta"><span class="badge b-pdf">PDF</span><span class="doc-date">📅 08 Jan 2027</span></div>
+      <div class="doc-title">Berita Acara Ujian Akhir Semester Ganjil 2026</div>
       <div class="doc-desc">Berita acara pelaksanaan PAS ganjil beserta daftar hadir pengawas dan catatan kejadian ujian.</div>
       <div class="doc-footer"><span class="doc-size">📎 760 KB · 10 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
     </div>
     <div class="doc-card">
-      <div class="doc-meta"><span class="badge b-doc">DOC</span><span class="doc-date">📅 05 Jan 2025</span></div>
+      <div class="doc-meta"><span class="badge b-doc">DOC</span><span class="doc-date">📅 05 Jan 2027</span></div>
       <div class="doc-title">Template Surat Izin Tidak Mengajar</div>
       <div class="doc-desc">Template resmi pengajuan izin tidak hadir mengajar yang diajukan ke Tata Usaha sekolah.</div>
       <div class="doc-footer"><span class="doc-size">📎 195 KB · 1 hal</span><a href="#" class="btn-dl">⬇ Unduh</a></div>
@@ -738,7 +910,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
   <!-- JADWAL UJIAN -->
   <div id="jadwal" class="jadwal-section">
-    <div class="sh"><div class="sh-left"><div class="sl">Jadwal</div><div class="st">Jadwal Ujian Semester Genap 2024/2025</div></div><a href="#" class="section-link">Unduh →</a></div>
+    <div class="sh"><div class="sh-left"><div class="sl">Jadwal</div><div class="st">Jadwal Ujian Semester Genap 2026/2027</div></div><a href="#" class="section-link">Unduh →</a></div>
     <div class="table-scroll">
       <table class="jadwal-tbl">
         <thead><tr>
@@ -750,11 +922,11 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
           <th>Status</th>
         </tr></thead>
         <tbody>
-          <tr><td>PTS Genap</td><td>17–21 Mar 2025</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
-          <tr><td>Uji Kompetensi Keahlian (UKK)</td><td>24 Mar–4 Apr 2025</td><td>XII (Semua Prodi)</td><td>08.00–16.00 WIB</td><td>Asesor Industri</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
-          <tr><td>Ujian Sekolah Teori</td><td>7–18 Apr 2025</td><td>XII (Semua Prodi)</td><td>07.30–09.30 WIB</td><td>Guru Piket</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
-          <tr><td>PAS Genap (X–XI)</td><td>2–13 Jun 2025</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
-          <tr><td>PAS Ganjil (lalu)</td><td>2–14 Des 2024</td><td>X, XI, XII</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-do"><span class="stdot"></span>Selesai</span></td></tr>
+          <tr><td>PTS Genap</td><td>16–20 Mar 2027</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>Uji Kompetensi Keahlian (UKK)</td><td>23 Mar–3 Apr 2027</td><td>XII (Semua Prodi)</td><td>08.00–16.00 WIB</td><td>Asesor Industri</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>Ujian Sekolah Teori</td><td>6–17 Apr 2027</td><td>XII (Semua Prodi)</td><td>07.30–09.30 WIB</td><td>Guru Piket</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>PAS Genap (X–XI)</td><td>1–12 Jun 2027</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
+          <tr><td>PAS Ganjil (lalu)</td><td>2–14 Des 2026</td><td>X, XI, XII</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-do"><span class="stdot"></span>Selesai</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -766,18 +938,18 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     <div class="news-grid">
       <div class="news-card">
         <span class="n-tag nt-warn">⚠ Penting</span>
-        <div class="n-title">Pengumpulan Perangkat Pembelajaran Semester Genap 2024/2025</div>
-        <div class="n-excerpt">Seluruh guru SMKS Ciledug Al Musaddadiyah diwajibkan mengumpulkan RPP/Modul Ajar, Prota, Prosem, ATP, dan Asesmen semester genap paling lambat 25 Januari 2025. Berkas dikumpulkan ke Waka Kurikulum dalam bentuk hardcopy dan softcopy.</div>
-        <div class="n-footer"><span class="n-date">📅 20 Januari 2025</span><a href="#" class="n-read">Baca Selengkapnya →</a></div>
+        <div class="n-title">Pengumpulan Perangkat Pembelajaran Semester Genap 2026/2027</div>
+        <div class="n-excerpt">Seluruh guru SMKS Ciledug Al Musaddadiyah diwajibkan mengumpulkan RPP/Modul Ajar, Prota, Prosem, ATP, dan Asesmen semester genap paling lambat 25 Januari 2027. Berkas dikumpulkan ke Waka Kurikulum dalam bentuk hardcopy dan softcopy.</div>
+        <div class="n-footer"><span class="n-date">📅 20 Januari 2027</span><a href="#" class="n-read">Baca Selengkapnya →</a></div>
       </div>
       <div class="notif-card">
         <div class="notif-title">🔔 Notifikasi Terbaru</div>
         <div class="notif-list">
           <div class="notif-item"><div class="ndot nd-g"></div><div><div class="n-text">SK Mengajar Semester Genap telah diterbitkan</div><div class="n-time">2 jam yang lalu</div></div></div>
           <div class="notif-item"><div class="ndot nd-b"></div><div><div class="n-text">Jadwal UKK Program Keahlian XII telah diupdate</div><div class="n-time">1 hari yang lalu</div></div></div>
-          <div class="notif-item"><div class="ndot nd-r"></div><div><div class="n-text">Batas upload Rapor Ganjil: 31 Jan 2025</div><div class="n-time">3 hari yang lalu</div></div></div>
-          <div class="notif-item"><div class="ndot nd-b"></div><div><div class="n-text">Template Berita Acara UKK 2025 tersedia</div><div class="n-time">5 hari yang lalu</div></div></div>
-          <div class="notif-item"><div class="ndot nd-g"></div><div><div class="n-text">Rapat koordinasi semester genap: 27 Jan 2025</div><div class="n-time">1 minggu lalu</div></div></div>
+          <div class="notif-item"><div class="ndot nd-r"></div><div><div class="n-text">Batas upload Rapor Ganjil: 31 Jan 2027</div><div class="n-time">3 hari yang lalu</div></div></div>
+          <div class="notif-item"><div class="ndot nd-b"></div><div><div class="n-text">Template Berita Acara UKK 2027 tersedia</div><div class="n-time">5 hari yang lalu</div></div></div>
+          <div class="notif-item"><div class="ndot nd-g"></div><div><div class="n-text">Rapat koordinasi semester genap: 27 Jan 2027</div><div class="n-time">1 minggu lalu</div></div></div>
         </div>
       </div>
     </div>
@@ -830,6 +1002,19 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     </div>
   </div>
 
+  <!-- DIREKTORI GURU & STAFF -->
+  <div id="direktori" style="margin-top:8px">
+    <div class="sh"><div class="sh-left"><div class="sl">Kepegawaian</div><div class="st">Direktori Guru &amp; Staff</div></div><span style="font-size:12.5px;color:var(--text-3)" id="guruCountLabel">0 data</span></div>
+    <div class="guru-toolbar">
+      <a href="https://khanabdullohoke.github.io/idgurudanstaff/" target="_blank" rel="noopener">🪪 Cetak Kartu ID Guru &amp; Staff</a>
+      <a href="https://www.smkciledugalmusaddadiyah.sch.id/p/kartu-id-guru-dan-staff.html" target="_blank" rel="noopener">🌐 Sumber Data Resmi ↗</a>
+      <a href="https://www.smkciledugalmusaddadiyah.sch.id/p/rekapitulasi-presensi-siswa-permapel.html" target="_blank" rel="noopener">📊 Rekap Presensi Per Mapel ↗</a>
+    </div>
+    <div class="guru-grid" id="guruGrid">
+      <!-- diisi otomatis via JavaScript / Panel Admin -->
+    </div>
+  </div>
+
 </main>
 
 <!-- FOOTER -->
@@ -840,7 +1025,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
         <div class="f-logo-icon">SMK<br>CAM</div>
         <div><div class="f-logo-name">SMKS Ciledug Al Musaddadiyah</div><div class="f-npsn">NPSN 20209207 · Akreditasi A</div></div>
       </div>
-      <p class="f-desc">Portal administrasi resmi. Melayani 110 peserta didik pada 6 program keahlian di Tarogong Kidul, Kabupaten Garut, Jawa Barat.</p>
+      <p class="f-desc">Portal administrasi resmi. Melayani 217 peserta didik pada 7 program keahlian di Tarogong Kidul, Kabupaten Garut, Jawa Barat.</p>
       <div class="f-contact">📍 Jl. Mayor Syamsu No. 2, Jayaraga, Kec. Tarogong Kidul, Kab. Garut 44151<br>👤 Kepala Sekolah: M. Nasrullah Ramdhan, M.Si</div>
     </div>
     <div class="f-col-wrap">
@@ -850,10 +1035,161 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 SMKS Ciledug Al Musaddadiyah Garut · NPSN 20209207 · Swasta · Akreditasi A</span>
+    <span>© 2026 SMKS Ciledug Al Musaddadiyah Garut · NPSN 20209207 · Swasta · Akreditasi A</span>
     <div class="footer-bottom-links"><a href="#">Privasi</a><a href="#">Panduan</a><a href="#">Kontak</a></div>
   </div>
 </footer>
+
+<!-- ═══════════════ FASILITAS ADMIN ═══════════════ -->
+<button class="fab-admin" id="fabAdmin" type="button"><span class="fab-dot"></span>⚙️ Admin</button>
+
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-modal">
+
+    <!-- LOGIN GATE -->
+    <div id="adminLoginView">
+      <div class="admin-modal-hdr">
+        <h3>🔐 Login Admin</h3>
+        <button class="admin-close" id="adminCloseLogin" type="button">✕</button>
+      </div>
+      <div class="admin-body">
+        <div class="admin-login">
+          <p>Masuk sebagai admin untuk memperbarui dokumen, direktori guru &amp; staff, dan data program keahlian pada portal ini.</p>
+          <input type="password" id="adminPass" placeholder="Masukkan kata sandi admin" autocomplete="off">
+          <div class="admin-err" id="adminErr"></div>
+          <button class="btn-a-primary" id="adminLoginBtn" type="button">Masuk Panel Admin</button>
+          <div class="admin-hint" id="adminAuthHint">Memeriksa mode keamanan…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL -->
+    <div id="adminPanelView" style="display:none">
+      <div class="admin-modal-hdr">
+        <div>
+          <h3>🗂 Panel Admin Portal</h3>
+          <span>Kelola dokumen, direktori guru, dan data kelas / program keahlian</span>
+        </div>
+        <button class="admin-close" id="adminCloseBtn" type="button">✕</button>
+      </div>
+      <div class="admin-body">
+
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-tab="dok" type="button">📄 Dokumen</button>
+          <button class="admin-tab" data-tab="guru" type="button">🪪 Guru &amp; Staff</button>
+          <button class="admin-tab" data-tab="kelas" type="button">🏫 Kelas / Prodi</button>
+          <button class="admin-tab" data-tab="ref" type="button">🔗 Referensi Data</button>
+          <button class="admin-tab" data-tab="sync" type="button">💾 Simpan / Muat</button>
+        </div>
+
+        <!-- TAB: DOKUMEN -->
+        <div class="admin-pane active" data-pane="dok">
+          <form class="admin-form" id="formDok">
+            <div class="form-row form-row-2">
+              <div><label>Judul Dokumen</label><input type="text" id="dokJudul" required placeholder="Contoh: SK Pembagian Tugas Mengajar"></div>
+              <div><label>Kategori Tampil</label>
+                <select id="dokKategori">
+                  <option value="dokumen">Dokumen Terbaru (Beranda)</option>
+                  <option value="kurikulum">Administrasi — Kurikulum</option>
+                  <option value="penilaian">Administrasi — Penilaian</option>
+                  <option value="tu">Administrasi — Tata Usaha</option>
+                  <option value="kepegawaian">Administrasi — Kepegawaian</option>
+                </select>
+              </div>
+            </div>
+            <div class="dok-upload-box">
+              <label>📤 Upload File dari Perangkat (opsional — otomatis mengisi Link Unduh)</label>
+              <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <input type="file" id="dokFile" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                <span id="dokUploadStatus" style="font-size:11.5px;color:var(--text-3)"></span>
+              </div>
+              <div class="admin-hint" id="dokUploadHint" style="margin-top:8px">Memeriksa mode upload…</div>
+            </div>
+            <div class="form-row form-row-2">
+              <div><label>Tipe File</label>
+                <select id="dokTipe"><option value="pdf">PDF</option><option value="doc">DOC</option><option value="xls">XLS</option></select>
+              </div>
+              <div><label>Tanggal</label><input type="date" id="dokTanggal"></div>
+            </div>
+            <div class="form-row form-row-2">
+              <div><label>Ukuran / Halaman</label><input type="text" id="dokUkuran" placeholder="Contoh: 2.1 MB · 14 hal"></div>
+              <div><label>Link Unduh (terkompresi)</label><input type="url" id="dokLink" required placeholder="Terisi otomatis jika upload file, atau tempel link eksternal"></div>
+            </div>
+            <div><label>Deskripsi Singkat</label><textarea id="dokDesk" placeholder="Deskripsi singkat isi dokumen"></textarea></div>
+            <div class="admin-checkline"><input type="checkbox" id="dokBaru"><label for="dokBaru" style="margin:0">Tandai sebagai dokumen BARU</label></div>
+            <div class="admin-actions">
+              <button type="submit" class="btn-a-primary">➕ Tambah / Perbarui Dokumen</button>
+              <button type="button" class="btn-a-ghost" id="dokResetBtn">Reset Form</button>
+            </div>
+          </form>
+          <div class="admin-list" id="dokList"></div>
+        </div>
+
+        <!-- TAB: GURU -->
+        <div class="admin-pane" data-pane="guru">
+          <form class="admin-form" id="formGuru">
+            <div class="form-row form-row-2">
+              <div><label>Nama Lengkap</label><input type="text" id="guruNama" required placeholder="Contoh: Dedi Supriadi, S.Pd"></div>
+              <div><label>Jabatan / Mapel</label><input type="text" id="guruJabatan" placeholder="Contoh: Guru Produktif TKJ"></div>
+            </div>
+            <div class="form-row form-row-2">
+              <div><label>Program Keahlian</label><input type="text" id="guruProdi" placeholder="Contoh: TKJ / Wali Kelas XI"></div>
+              <div><label>Link Kartu ID (opsional)</label><input type="url" id="guruLink" placeholder="https://..."></div>
+            </div>
+            <div class="admin-actions">
+              <button type="submit" class="btn-a-primary">➕ Tambah / Perbarui Data Guru</button>
+              <button type="button" class="btn-a-ghost" id="guruResetBtn">Reset Form</button>
+            </div>
+          </form>
+          <div class="admin-list" id="guruList"></div>
+        </div>
+
+        <!-- TAB: KELAS / PRODI -->
+        <div class="admin-pane" data-pane="kelas">
+          <form class="admin-form" id="formKelas">
+            <div class="form-row form-row-2">
+              <div><label>Nama Program Keahlian</label><input type="text" id="kelasNama" required placeholder="Contoh: Teknik Jaringan Komputer & Telekomunikasi"></div>
+              <div><label>Jumlah Peserta Didik</label><input type="number" id="kelasJumlah" min="0" required placeholder="Contoh: 27"></div>
+            </div>
+            <div class="admin-actions">
+              <button type="submit" class="btn-a-primary">➕ Tambah / Perbarui Data Kelas</button>
+              <button type="button" class="btn-a-ghost" id="kelasResetBtn">Reset Form</button>
+            </div>
+          </form>
+          <div class="admin-list" id="kelasList"></div>
+        </div>
+
+        <!-- TAB: REFERENSI -->
+        <div class="admin-pane" data-pane="ref">
+          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;line-height:1.6">Buka sumber data resmi berikut untuk menyalin data kelas terbaru dan data guru sebelum menginput ke form di sebelah kiri.</p>
+          <div class="admin-ref-list">
+            <div class="admin-ref-item"><div><strong>Rekapitulasi Presensi Siswa Per Mapel</strong>Data kehadiran &amp; kelas terbaru per mata pelajaran.</div><a href="https://www.smkciledugalmusaddadiyah.sch.id/p/rekapitulasi-presensi-siswa-permapel.html" target="_blank" rel="noopener">Buka ↗</a></div>
+            <div class="admin-ref-item"><div><strong>Kartu ID Guru dan Staff</strong>Direktori &amp; generator kartu identitas guru/staff.</div><a href="https://www.smkciledugalmusaddadiyah.sch.id/p/kartu-id-guru-dan-staff.html" target="_blank" rel="noopener">Buka ↗</a></div>
+            <div class="admin-ref-item"><div><strong>Portal Utama SMK CALM</strong>Halaman resmi sekolah — profil, program, berita.</div><a href="https://www.smkciledugalmusaddadiyah.sch.id/" target="_blank" rel="noopener">Buka ↗</a></div>
+          </div>
+        </div>
+
+        <!-- TAB: SYNC -->
+        <div class="admin-pane" data-pane="sync">
+          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:10px;line-height:1.6">Halaman ini statis (tanpa server/database), jadi perubahan hanya tersimpan selama sesi berjalan kecuali dihubungkan ke Google Sheets. Gunakan tombol di bawah untuk mengunduh data sebagai file JSON, atau sinkronkan ke Google Sheets bila sudah tersambung.</p>
+          <div class="admin-ref-item" style="margin-bottom:14px">
+            <div><strong>Status Google Sheets</strong><span id="gsStatus">Belum terhubung — isi WEBAPP_URL di kode sumber.</span></div>
+            <button type="button" class="btn-a-ghost" id="gsPullBtn" style="flex-shrink:0">🔄 Tarik dari Sheets</button>
+          </div>
+          <div class="admin-actions">
+            <button type="button" class="btn-a-primary" id="exportBtn">⬇ Unduh Data (JSON)</button>
+            <button type="button" class="btn-a-ghost" id="importBtnTrigger">⬆ Muat Data (JSON)</button>
+            <input type="file" id="importFile" accept="application/json" style="display:none">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
 
 <script>
 /* ── HAMBURGER MENU ─────────────────────────── */
@@ -889,7 +1225,7 @@ document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => {
 });
 
 /* ── SCROLL-SPY ─────────────────────────────── */
-const sections = ['dokumen','jadwal','pengumuman','administrasi'].map(id => document.getElementById(id)).filter(Boolean);
+const sections = ['dokumen','jadwal','pengumuman','administrasi','direktori'].map(id => document.getElementById(id)).filter(Boolean);
 const allNavLinks = document.querySelectorAll('.nav-links a, .nav-drawer a');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -933,6 +1269,604 @@ const fuObs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = 'paused'; fuObs.observe(el); });
+
+/* ═══════════════════════════════════════════════════════════
+   FASILITAS ADMIN — kelola Dokumen, Guru & Staff, Kelas/Prodi
+   Sumber referensi data (buka manual saat input):
+   - Rekap Presensi Per Mapel : /p/rekapitulasi-presensi-siswa-permapel.html
+   - Kartu ID Guru & Staff    : /p/kartu-id-guru-dan-staff.html
+   - Portal Utama SMK CALM    : https://www.smkciledugalmusaddadiyah.sch.id/
+═══════════════════════════════════════════════════════════ */
+(function(){
+  // Hash SHA-256 dari kata sandi mode demo lokal ("admin123") — dipakai HANYA jika
+  // WEBAPP_URL belum diisi. Kata sandi asli tidak pernah tersimpan di source.
+  // Untuk keamanan penuh (direkomendasikan), sambungkan ke Google Sheets (lihat Code.gs)
+  // agar verifikasi kata sandi dilakukan di server, bukan di browser.
+  const LOCAL_ADMIN_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // sha256("admin123")
+  const WEBAPP_URL = ''; // tempel URL Web App Google Apps Script (diakhiri /exec) di sini untuk login & sinkron aman
+  const LOCAL_MAX_FAILS = 5;
+  const LOCAL_LOCKOUT_MS = 60 * 1000;
+
+  let isAuthed = false;
+  let sessionToken = null;
+  let localFails = 0;
+  let localLockUntil = 0;
+  let editing = { dok: null, guru: null, kelas: null };
+
+  const state = { documents: [], guru: [], kelas: [] };
+  let uid = 1;
+  const nextId = () => 'a' + (uid++);
+
+  /* ── helpers ── */
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const esc = s => (s || '').toString().replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  async function sha256Hex(text){
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function toast(msg){
+    const t = $('#adminToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._tm);
+    t._tm = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  function attachDownloadFeedback(a){
+    a.addEventListener('click', function(){
+      const orig = this.innerHTML;
+      this.innerHTML = '✓ Membuka...';
+      setTimeout(() => { this.innerHTML = orig; }, 1200);
+    });
+  }
+
+  /* ── SINKRON GOOGLE SHEETS (opsional, isi WEBAPP_URL di atas) ── */
+  const gsActive = () => !!WEBAPP_URL;
+
+  function setGsStatus(msg){
+    const el = $('#gsStatus');
+    if(el) el.textContent = msg;
+  }
+
+  async function gsFetchAll(){
+    if(!gsActive()) return;
+    setGsStatus('Menyinkronkan dari Google Sheets...');
+    try {
+      const res = await fetch(WEBAPP_URL, { method: 'GET' });
+      const json = await res.json();
+      if(json.ok){
+        state.documents = json.data.documents || [];
+        state.guru = json.data.guru || [];
+        state.kelas = json.data.kelas || [];
+        renderAllDocs();
+        renderGuru();
+        state.kelas.forEach(applyKelasToGrid);
+        renderKelasList();
+        setGsStatus('Tersambung — data terakhir ditarik ' + new Date().toLocaleTimeString('id-ID'));
+        toast('Data dimuat dari Google Sheets');
+      } else {
+        setGsStatus('Gagal memuat data dari Sheets: ' + (json.error || 'unknown'));
+      }
+    } catch(err){
+      setGsStatus('Tidak dapat menghubungi Google Sheets (cek WEBAPP_URL / izin deployment).');
+    }
+  }
+
+  async function gsUpsert(type, item){
+    if(!gsActive()) return;
+    try {
+      const res = await fetch(WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // hindari CORS preflight
+        body: JSON.stringify({ type, action: 'upsert', item, token: sessionToken }),
+      });
+      const json = await res.json();
+      if(json.ok){
+        setGsStatus('Tersinkron ke Google Sheets ' + new Date().toLocaleTimeString('id-ID'));
+      } else if(json.error === 'unauthorized'){
+        handleSessionExpired();
+      } else {
+        setGsStatus('Gagal menyinkron: ' + (json.error || 'unknown'));
+      }
+    } catch(err){
+      setGsStatus('Gagal menyinkron ke Google Sheets (tersimpan lokal saja).');
+    }
+  }
+
+  async function gsDelete(type, item){
+    if(!gsActive()) return;
+    try {
+      const res = await fetch(WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ type, action: 'delete', item, token: sessionToken }),
+      });
+      const json = await res.json();
+      if(json.ok){
+        setGsStatus('Tersinkron ke Google Sheets ' + new Date().toLocaleTimeString('id-ID'));
+      } else if(json.error === 'unauthorized'){
+        handleSessionExpired();
+      } else {
+        setGsStatus('Gagal menyinkron penghapusan: ' + (json.error || 'unknown'));
+      }
+    } catch(err){
+      setGsStatus('Gagal menyinkron penghapusan ke Google Sheets.');
+    }
+  }
+
+  function handleSessionExpired(){
+    isAuthed = false;
+    sessionToken = null;
+    setGsStatus('Sesi admin berakhir — silakan login ulang.');
+    toast('Sesi admin berakhir, silakan login ulang');
+    showLogin();
+  }
+
+  /* ── OVERLAY / LOGIN ── */
+  const overlay = $('#adminOverlay');
+  function openAdmin(){
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if(isAuthed){ showPanel(); } else { showLogin(); }
+  }
+  function closeAdmin(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function showLogin(){
+    $('#adminLoginView').style.display = '';
+    $('#adminPanelView').style.display = 'none';
+    $('#adminErr').style.display = 'none';
+    $('#adminPass').value = '';
+    $('#adminAuthHint').textContent = gsActive()
+      ? '🔒 Autentikasi diverifikasi di server (Google Sheets) — kata sandi tidak tersimpan di halaman ini.'
+      : '⚠️ Mode demo lokal (belum tersambung Google Sheets). Untuk keamanan penuh, atur WEBAPP_URL agar login diverifikasi di server.';
+    updateLoginLockUI();
+  }
+  function showPanel(){
+    $('#adminLoginView').style.display = 'none';
+    $('#adminPanelView').style.display = '';
+    updateUploadHint();
+  }
+  function showErr(msg){
+    const el = $('#adminErr');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function updateLoginLockUI(){
+    const btn = $('#adminLoginBtn');
+    const remain = localLockUntil - Date.now();
+    if(!gsActive() && remain > 0){
+      btn.disabled = true;
+      const secs = Math.ceil(remain / 1000);
+      btn.textContent = `Terkunci — coba lagi ${secs}s`;
+      setTimeout(updateLoginLockUI, 1000);
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Masuk Panel Admin';
+    }
+  }
+
+  async function tryLogin(){
+    const val = $('#adminPass').value;
+    if(!val){ showErr('Masukkan kata sandi terlebih dahulu.'); return; }
+    const btn = $('#adminLoginBtn');
+
+    if(gsActive()){
+      // ── mode aman: verifikasi kata sandi & rate-limit dilakukan di server ──
+      btn.disabled = true; btn.textContent = 'Memeriksa...';
+      try {
+        const res = await fetch(WEBAPP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'login', password: val }),
+        });
+        const json = await res.json();
+        if(json.ok){
+          isAuthed = true;
+          sessionToken = json.token;
+          showPanel();
+          toast('Berhasil masuk sebagai admin');
+          gsFetchAll();
+        } else {
+          showErr(json.error || 'Kata sandi salah.');
+        }
+      } catch(err){
+        showErr('Tidak dapat menghubungi server autentikasi. Periksa WEBAPP_URL / koneksi internet.');
+      }
+      btn.disabled = false; btn.textContent = 'Masuk Panel Admin';
+      return;
+    }
+
+    // ── mode demo lokal (fallback): hash SHA-256 + rate-limit di browser ──
+    if(Date.now() < localLockUntil){ updateLoginLockUI(); return; }
+    const hash = await sha256Hex(val);
+    if(hash === LOCAL_ADMIN_HASH){
+      isAuthed = true;
+      localFails = 0;
+      showPanel();
+      toast('Berhasil masuk sebagai admin (mode demo lokal)');
+    } else {
+      localFails++;
+      if(localFails >= LOCAL_MAX_FAILS){
+        localLockUntil = Date.now() + LOCAL_LOCKOUT_MS;
+        localFails = 0;
+        showErr('Terlalu banyak percobaan gagal. Coba lagi sebentar lagi.');
+        updateLoginLockUI();
+      } else {
+        showErr(`Kata sandi salah (${localFails}/${LOCAL_MAX_FAILS} percobaan).`);
+      }
+    }
+  }
+
+  $('#fabAdmin').addEventListener('click', openAdmin);
+  $('#navAdminBtn').addEventListener('click', openAdmin);
+  $('#adminCloseLogin').addEventListener('click', closeAdmin);
+  $('#adminCloseBtn').addEventListener('click', closeAdmin);
+  overlay.addEventListener('click', e => { if(e.target === overlay) closeAdmin(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && overlay.classList.contains('open')) closeAdmin(); });
+  $('#adminLoginBtn').addEventListener('click', tryLogin);
+  $('#adminPass').addEventListener('keydown', e => { if(e.key === 'Enter') tryLogin(); });
+
+  /* ── TABS ── */
+  $$('.admin-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('.admin-tab').forEach(b => b.classList.remove('active'));
+      $$('.admin-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      $(`.admin-pane[data-pane="${btn.dataset.tab}"]`).classList.add('active');
+    });
+  });
+
+  /* ═══ DOKUMEN ═══ */
+  const KATEGORI_LABEL = { dokumen:'Dokumen Terbaru', kurikulum:'Kurikulum', penilaian:'Penilaian', tu:'Tata Usaha', kepegawaian:'Kepegawaian' };
+  const KAT_TO_ACAT = { kurikulum:'Kurikulum', penilaian:'Penilaian', tu:'Tata Usaha', kepegawaian:'Kepegawaian' };
+
+  function renderDokList(){
+    const wrap = $('#dokList');
+    if(!state.documents.length){ wrap.innerHTML = '<div class="admin-list-item"><div class="li-main"><div class="li-sub">Belum ada dokumen ditambahkan lewat panel admin.</div></div></div>'; return; }
+    wrap.innerHTML = state.documents.map(d => `
+      <div class="admin-list-item">
+        <div class="li-main">
+          <div class="li-title">${esc(d.judul)}</div>
+          <div class="li-sub">${esc(KATEGORI_LABEL[d.kategori] || d.kategori)} · ${d.tipe.toUpperCase()} ${d.baru ? '· BARU' : ''}</div>
+        </div>
+        <div class="li-btns">
+          <button type="button" title="Edit" data-edit="${d.id}">✎</button>
+          <button type="button" title="Hapus" data-del="${d.id}">🗑</button>
+        </div>
+      </div>`).join('');
+    wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editDok(b.dataset.edit)));
+    wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteDok(b.dataset.del)));
+  }
+
+  function renderDocCard(d){
+    const badgeClass = d.tipe === 'pdf' ? 'b-pdf' : (d.tipe === 'xls' ? 'b-xls' : 'b-doc');
+    const el = document.createElement('div');
+    el.className = 'doc-card';
+    el.dataset.id = d.id;
+    el.innerHTML = `
+      <div class="doc-meta"><span class="badge ${badgeClass}">${d.tipe.toUpperCase()}</span>${d.baru ? '<span class="badge b-new">BARU</span>' : ''}<span class="doc-date">📅 ${esc(d.tanggal || '')}</span></div>
+      <div class="doc-title">${esc(d.judul)}</div>
+      <div class="doc-desc">${esc(d.desk || '')}</div>
+      <div class="doc-footer"><span class="doc-size">📎 ${esc(d.ukuran || '')}</span><a href="${esc(d.link)}" target="_blank" rel="noopener" class="btn-dl">⬇ Unduh</a></div>`;
+    attachDownloadFeedback(el.querySelector('.btn-dl'));
+    return el;
+  }
+
+  function renderAdminItem(d){
+    const el = document.createElement('a');
+    el.href = d.link; el.target = '_blank'; el.rel = 'noopener';
+    el.className = 'a-item';
+    el.dataset.id = d.id;
+    el.innerHTML = `<div class="a-item-l"><span class="a-ico">📎</span>${esc(d.judul)}</div>${d.baru ? '<span class="i-new">BARU</span>' : '<span class="a-arr">›</span>'}`;
+    return el;
+  }
+
+  function renderAllDocs(){
+    // bersihkan hasil render admin sebelumnya
+    $$('.doc-card[data-id], .a-item[data-id]').forEach(el => el.remove());
+    state.documents.forEach(d => {
+      if(d.kategori === 'dokumen'){
+        $('#dokumen .doc-grid').prepend(renderDocCard(d));
+      } else {
+        const acat = KAT_TO_ACAT[d.kategori];
+        const card = $$('.admin-card').find(c => c.querySelector('.a-cat')?.textContent.trim() === acat);
+        if(card) card.querySelector('.admin-items').appendChild(renderAdminItem(d));
+      }
+    });
+    renderDokList();
+  }
+
+  function editDok(id){
+    const d = state.documents.find(x => x.id === id);
+    if(!d) return;
+    editing.dok = id;
+    $('#dokJudul').value = d.judul; $('#dokKategori').value = d.kategori; $('#dokTipe').value = d.tipe;
+    $('#dokTanggal').value = d.tanggal || ''; $('#dokUkuran').value = d.ukuran || ''; $('#dokLink').value = d.link;
+    $('#dokDesk').value = d.desk || ''; $('#dokBaru').checked = !!d.baru;
+    toast('Mengedit: ' + d.judul);
+  }
+  function deleteDok(id){
+    const item = state.documents.find(x => x.id === id);
+    state.documents = state.documents.filter(x => x.id !== id);
+    renderAllDocs();
+    if(item) gsDelete('documents', item);
+    toast('Dokumen dihapus');
+  }
+
+  /* ═══ UPLOAD FILE DOKUMEN KE GOOGLE DRIVE ═══ */
+  const EXT_TO_TIPE = { pdf:'pdf', doc:'doc', docx:'doc', xls:'xls', xlsx:'xls' };
+  function fmtBytes(n){
+    if(n < 1024) return n + ' B';
+    if(n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
+    return (n/(1024*1024)).toFixed(1) + ' MB';
+  }
+  function updateUploadHint(){
+    const hint = $('#dokUploadHint');
+    const fileInput = $('#dokFile');
+    if(!hint || !fileInput) return;
+    if(gsActive()){
+      hint.textContent = '📁 File akan diunggah ke Google Drive sekolah lewat backend, lalu link unduhnya terisi otomatis. Maks. ±10 MB.';
+      fileInput.disabled = false;
+    } else {
+      hint.textContent = '⚠️ Upload file butuh koneksi Google Sheets/Drive (isi WEBAPP_URL). Untuk sekarang, isi "Link Unduh" secara manual dengan tautan eksternal (mis. Google Drive yang kamu buat sendiri).';
+      fileInput.disabled = true;
+    }
+  }
+
+  function fileToBase64(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  $('#dokFile')?.addEventListener('change', async e => {
+    const file = e.target.files[0];
+    const statusEl = $('#dokUploadStatus');
+    if(!file) return;
+    if(!gsActive()){ statusEl.textContent = 'Upload butuh koneksi Google Sheets/Drive.'; e.target.value = ''; return; }
+    if(!isAuthed || !sessionToken){ statusEl.textContent = 'Sesi admin tidak valid, login ulang.'; e.target.value = ''; return; }
+    if(file.size > 10 * 1024 * 1024){
+      statusEl.textContent = '❌ File melebihi 10 MB. Gunakan link eksternal.';
+      e.target.value = '';
+      return;
+    }
+    statusEl.textContent = '⏳ Mengunggah "' + file.name + '"...';
+    $('#dokFile').disabled = true;
+    try {
+      const base64 = await fileToBase64(file);
+      const res = await fetch(WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'uploadFile',
+          token: sessionToken,
+          filename: file.name,
+          mimeType: file.type || 'application/octet-stream',
+          dataBase64: base64,
+        }),
+      });
+      const json = await res.json();
+      if(json.ok){
+        $('#dokLink').value = json.downloadLink;
+        $('#dokUkuran').value = fmtBytes(json.sizeBytes || file.size);
+        const ext = (file.name.split('.').pop() || '').toLowerCase();
+        if(EXT_TO_TIPE[ext]) $('#dokTipe').value = EXT_TO_TIPE[ext];
+        if(!$('#dokJudul').value.trim()) $('#dokJudul').value = file.name.replace(/\.[^.]+$/, '');
+        statusEl.textContent = '✅ Terunggah: ' + json.fileName;
+        toast('File berhasil diunggah ke Google Drive');
+      } else if(json.error === 'unauthorized'){
+        statusEl.textContent = '❌ Sesi berakhir, login ulang.';
+        handleSessionExpired();
+      } else {
+        statusEl.textContent = '❌ Gagal: ' + (json.error || 'unknown');
+      }
+    } catch(err){
+      statusEl.textContent = '❌ Gagal mengunggah (periksa koneksi / WEBAPP_URL).';
+    }
+    $('#dokFile').disabled = false;
+  });
+
+  $('#formDok').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = {
+      id: editing.dok || nextId(),
+      judul: $('#dokJudul').value.trim(),
+      kategori: $('#dokKategori').value,
+      tipe: $('#dokTipe').value,
+      tanggal: $('#dokTanggal').value,
+      ukuran: $('#dokUkuran').value.trim(),
+      link: $('#dokLink').value.trim(),
+      desk: $('#dokDesk').value.trim(),
+      baru: $('#dokBaru').checked,
+    };
+    if(!data.judul || !data.link){ toast('Judul dan link unduh wajib diisi (upload file atau tempel link)'); return; }
+    if(editing.dok){
+      const idx = state.documents.findIndex(x => x.id === editing.dok);
+      if(idx > -1) state.documents[idx] = data;
+      editing.dok = null;
+    } else {
+      state.documents.unshift(data);
+    }
+    renderAllDocs();
+    gsUpsert('documents', data);
+    e.target.reset();
+    $('#dokUploadStatus').textContent = '';
+    toast('Dokumen tersimpan: ' + data.judul);
+  });
+  $('#dokResetBtn').addEventListener('click', () => { $('#formDok').reset(); editing.dok = null; $('#dokUploadStatus').textContent = ''; });
+
+  /* ═══ GURU & STAFF ═══ */
+  function initials(name){
+    return (name || '?').trim().split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase();
+  }
+  function renderGuru(){
+    const grid = $('#guruGrid');
+    $('#guruCountLabel').textContent = state.guru.length + ' data';
+    if(!state.guru.length){
+      grid.innerHTML = '<div class="guru-empty">Belum ada data guru & staff. Tambahkan melalui tombol ⚙️ Admin, atau lihat direktori resmi di tautan referensi.</div>';
+    } else {
+      grid.innerHTML = state.guru.map(g => `
+        <div class="guru-card">
+          <div class="guru-avatar">${esc(initials(g.nama))}</div>
+          <div style="min-width:0">
+            <div class="guru-name">${esc(g.nama)}</div>
+            <div class="guru-role">${esc(g.jabatan || '')}${g.prodi ? ' · ' + esc(g.prodi) : ''}</div>
+            <div class="guru-links">
+              ${g.link ? `<a href="${esc(g.link)}" target="_blank" rel="noopener">🪪 Kartu ID</a>` : `<a href="https://khanabdullohoke.github.io/idgurudanstaff/" target="_blank" rel="noopener">🪪 Cetak ID</a>`}
+              <a href="https://www.smkciledugalmusaddadiyah.sch.id/p/presensi-guru-dan-staff.html" target="_blank" rel="noopener">📊 Presensi</a>
+            </div>
+          </div>
+        </div>`).join('');
+    }
+    renderGuruList();
+  }
+  function renderGuruList(){
+    const wrap = $('#guruList');
+    if(!state.guru.length){ wrap.innerHTML = ''; return; }
+    wrap.innerHTML = state.guru.map(g => `
+      <div class="admin-list-item">
+        <div class="li-main"><div class="li-title">${esc(g.nama)}</div><div class="li-sub">${esc(g.jabatan || '-')}</div></div>
+        <div class="li-btns"><button type="button" data-edit="${g.id}">✎</button><button type="button" data-del="${g.id}">🗑</button></div>
+      </div>`).join('');
+    wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editGuru(b.dataset.edit)));
+    wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteGuru(b.dataset.del)));
+  }
+  function editGuru(id){
+    const g = state.guru.find(x => x.id === id); if(!g) return;
+    editing.guru = id;
+    $('#guruNama').value = g.nama; $('#guruJabatan').value = g.jabatan || '';
+    $('#guruProdi').value = g.prodi || ''; $('#guruLink').value = g.link || '';
+    toast('Mengedit: ' + g.nama);
+  }
+  function deleteGuru(id){
+    const item = state.guru.find(x => x.id === id);
+    state.guru = state.guru.filter(x => x.id !== id);
+    renderGuru();
+    if(item) gsDelete('guru', item);
+    toast('Data guru dihapus');
+  }
+
+  $('#formGuru').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = { id: editing.guru || nextId(), nama: $('#guruNama').value.trim(), jabatan: $('#guruJabatan').value.trim(), prodi: $('#guruProdi').value.trim(), link: $('#guruLink').value.trim() };
+    if(!data.nama){ toast('Nama guru wajib diisi'); return; }
+    if(editing.guru){
+      const idx = state.guru.findIndex(x => x.id === editing.guru);
+      if(idx > -1) state.guru[idx] = data;
+      editing.guru = null;
+    } else { state.guru.push(data); }
+    renderGuru();
+    gsUpsert('guru', data);
+    e.target.reset();
+    toast('Data guru tersimpan: ' + data.nama);
+  });
+  $('#guruResetBtn').addEventListener('click', () => { $('#formGuru').reset(); editing.guru = null; });
+
+  /* ═══ KELAS / PRODI ═══ */
+  function renderKelasList(){
+    const wrap = $('#kelasList');
+    if(!state.kelas.length){ wrap.innerHTML = '<div class="admin-list-item"><div class="li-main"><div class="li-sub">Belum ada pembaruan data kelas lewat panel admin.</div></div></div>'; return; }
+    wrap.innerHTML = state.kelas.map(k => `
+      <div class="admin-list-item">
+        <div class="li-main"><div class="li-title">${esc(k.nama)}</div><div class="li-sub">${k.jumlah} peserta didik</div></div>
+        <div class="li-btns"><button type="button" data-edit="${k.id}">✎</button><button type="button" data-del="${k.id}">🗑</button></div>
+      </div>`).join('');
+    wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editKelas(b.dataset.edit)));
+    wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteKelas(b.dataset.del)));
+  }
+  function applyKelasToGrid(k){
+    const cards = $$('.prodi-card');
+    const card = cards.find(c => c.querySelector('.prodi-name')?.textContent.trim().toLowerCase() === k.nama.trim().toLowerCase());
+    const pct = Math.max(4, Math.min(100, Math.round((k.jumlah / 45) * 100)));
+    if(card){
+      card.querySelector('.prodi-pd').innerHTML = `<strong>${k.jumlah}</strong> Peserta Didik`;
+      card.querySelector('.prodi-bar').style.width = pct + '%';
+    } else {
+      const grid = $('.prodi-grid');
+      const el = document.createElement('div');
+      el.className = 'prodi-card fu';
+      el.innerHTML = `<div class="prodi-icon" style="background:var(--blue-pale);width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🏫</div><div style="flex:1"><div class="prodi-name">${esc(k.nama)}</div><div class="prodi-pd"><strong>${k.jumlah}</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:${pct}%"></div></div></div>`;
+      grid.appendChild(el);
+    }
+  }
+  function editKelas(id){
+    const k = state.kelas.find(x => x.id === id); if(!k) return;
+    editing.kelas = id;
+    $('#kelasNama').value = k.nama; $('#kelasJumlah').value = k.jumlah;
+    toast('Mengedit: ' + k.nama);
+  }
+  function deleteKelas(id){
+    const item = state.kelas.find(x => x.id === id);
+    state.kelas = state.kelas.filter(x => x.id !== id);
+    renderKelasList();
+    if(item) gsDelete('kelas', item);
+    toast('Data kelas dihapus dari daftar admin (kartu program keahlian tidak diubah kembali otomatis)');
+  }
+
+  $('#formKelas').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = { id: editing.kelas || nextId(), nama: $('#kelasNama').value.trim(), jumlah: parseInt($('#kelasJumlah').value, 10) || 0 };
+    if(!data.nama){ toast('Nama program keahlian wajib diisi'); return; }
+    if(editing.kelas){
+      const idx = state.kelas.findIndex(x => x.id === editing.kelas);
+      if(idx > -1) state.kelas[idx] = data;
+      editing.kelas = null;
+    } else { state.kelas.push(data); }
+    applyKelasToGrid(data);
+    renderKelasList();
+    gsUpsert('kelas', data);
+    e.target.reset();
+    toast('Data kelas tersimpan: ' + data.nama);
+  });
+  $('#kelasResetBtn').addEventListener('click', () => { $('#formKelas').reset(); editing.kelas = null; });
+
+  /* ═══ EXPORT / IMPORT ═══ */
+  $('#exportBtn').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'data-admin-smkcalm.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    toast('File JSON diunduh');
+  });
+  $('#importBtnTrigger').addEventListener('click', () => $('#importFile').click());
+  $('#importFile').addEventListener('change', e => {
+    const file = e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        state.documents = Array.isArray(parsed.documents) ? parsed.documents : [];
+        state.guru = Array.isArray(parsed.guru) ? parsed.guru : [];
+        state.kelas = Array.isArray(parsed.kelas) ? parsed.kelas : [];
+        renderAllDocs();
+        renderGuru();
+        state.kelas.forEach(applyKelasToGrid);
+        renderKelasList();
+        toast('Data berhasil dimuat dari file');
+      } catch(err){ toast('Gagal membaca file JSON'); }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  $('#gsPullBtn').addEventListener('click', gsFetchAll);
+
+  /* ── init ── */
+  renderDokList();
+  renderGuru();
+  renderKelasList();
+  if(gsActive()){ gsFetchAll(); } else { setGsStatus('Belum terhubung — isi WEBAPP_URL di kode sumber.'); }
+})();
 </script>
 </body>
 </html>
