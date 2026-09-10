@@ -398,6 +398,12 @@ main{max-width:1200px;margin:0 auto;padding:48px 16px 72px}
 .jadwal-tbl tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
 .jadwal-tbl tbody tr:hover{background:var(--blue-pale)}
 .jadwal-tbl tbody tr:last-child{border-bottom:none}
+.jadwal-tbl tr.jadwal-group{background:var(--blue-pale)}
+.jadwal-tbl tr.jadwal-group:hover{background:var(--blue-pale)}
+.jadwal-tbl tr.jadwal-group td{
+  padding:9px 16px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;font-weight:700;
+  letter-spacing:.4px;text-transform:uppercase;color:var(--blue-deep);
+}
 .jadwal-tbl td{padding:12px 16px;font-size:13px;color:var(--text-2);vertical-align:middle;white-space:nowrap}
 .jadwal-tbl td:first-child{font-weight:600;color:var(--text-1)}
 .stbadge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700}
@@ -823,7 +829,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
       <a href="#jadwal" class="btn-ghost">📅 Jadwal Ujian</a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">217</div><div class="stat-label">Peserta Didik</div></div>
+      <div class="stat"><div class="stat-num">326</div><div class="stat-label">Peserta Didik</div></div>
       <div class="stat"><div class="stat-num">7</div><div class="stat-label">Program Keahlian</div></div>
       <div class="stat"><div class="stat-num">A</div><div class="stat-label">Akreditasi BAN-PDM</div></div>
       <div class="stat"><div class="stat-num">2023</div><div class="stat-label">Tahun Akreditasi</div></div>
@@ -857,15 +863,15 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
   </div>
 
   <!-- PROGRAM KEAHLIAN -->
-  <div class="sh"><div class="sh-left"><div class="sl">Kompetensi</div><div class="st">Program Keahlian</div></div><span style="font-size:12.5px;color:var(--text-3)">Total 217 Peserta Didik</span></div>
+  <div class="sh"><div class="sh-left"><div class="sl">Kompetensi</div><div class="st">Program Keahlian</div></div><span style="font-size:12.5px;color:var(--text-3)">Total 326 Peserta Didik</span></div>
   <div class="prodi-grid">
-    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fce4ec;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🎨</div><div style="flex:1"><div class="prodi-name">Desain Komunikasi Visual</div><div class="prodi-pd"><strong>45</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:100%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon ic-t">💻</div><div style="flex:1"><div class="prodi-name">Teknik Komputer & Jaringan</div><div class="prodi-pd"><strong>38</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:84%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon" style="background:#f3e5f5;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🛒</div><div style="flex:1"><div class="prodi-name">Bisnis Digital</div><div class="prodi-pd"><strong>34</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:76%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon ic-b">🚗</div><div style="flex:1"><div class="prodi-name">Teknik Kendaraan Ringan (TKR)</div><div class="prodi-pd"><strong>30</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:67%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon ic-g">🏢</div><div style="flex:1"><div class="prodi-name">Manajemen Perkantoran</div><div class="prodi-pd"><strong>26</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:58%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fff3e0;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🚵</div><div style="flex:1"><div class="prodi-name">Teknik Sepeda Motor (TSM)</div><div class="prodi-pd"><strong>22</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:49%"></div></div></div></div>
-    <div class="prodi-card fu"><div class="prodi-icon ic-gr">💰</div><div style="flex:1"><div class="prodi-name">Akuntansi Keuangan Lembaga</div><div class="prodi-pd"><strong>22</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:49%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fce4ec;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🎨</div><div style="flex:1"><div class="prodi-name">Desain Komunikasi Visual</div><div class="prodi-pd"><strong>68</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:100%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-t">💻</div><div style="flex:1"><div class="prodi-name">Teknik Komputer & Jaringan</div><div class="prodi-pd"><strong>57</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:84%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#f3e5f5;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🛒</div><div style="flex:1"><div class="prodi-name">Bisnis Digital</div><div class="prodi-pd"><strong>51</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:75%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-b">🚗</div><div style="flex:1"><div class="prodi-name">Teknik Kendaraan Ringan (TKR)</div><div class="prodi-pd"><strong>45</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:66%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-g">🏢</div><div style="flex:1"><div class="prodi-name">Manajemen Perkantoran</div><div class="prodi-pd"><strong>39</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:57%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon" style="background:#fff3e0;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🚵</div><div style="flex:1"><div class="prodi-name">Teknik Sepeda Motor (TSM)</div><div class="prodi-pd"><strong>33</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:49%"></div></div></div></div>
+    <div class="prodi-card fu"><div class="prodi-icon ic-gr">💰</div><div style="flex:1"><div class="prodi-name">Akuntansi Keuangan Lembaga</div><div class="prodi-pd"><strong>33</strong> Peserta Didik</div><div class="prodi-bar-wrap"><div class="prodi-bar" style="width:49%"></div></div></div></div>
   </div>
 
   <!-- QUICK ACCESS -->
@@ -922,7 +928,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
   <!-- JADWAL UJIAN -->
   <div id="jadwal" class="jadwal-section">
-    <div class="sh"><div class="sh-left"><div class="sl">Jadwal</div><div class="st">Jadwal Ujian Semester Genap 2026/2027</div></div><a href="#" class="section-link">Unduh →</a></div>
+    <div class="sh"><div class="sh-left"><div class="sl">Jadwal</div><div class="st">Jadwal Ujian Tahun Ajaran 2026/2027</div></div><a href="#" class="section-link">Unduh →</a></div>
     <div class="table-scroll">
       <table class="jadwal-tbl">
         <thead><tr>
@@ -934,11 +940,14 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
           <th>Status</th>
         </tr></thead>
         <tbody>
+          <tr class="jadwal-group"><td colspan="6">Semester Ganjil 2026/2027</td></tr>
+          <tr><td>PTS Ganjil</td><td>28 Sep–2 Okt 2026</td><td>X, XI, XII (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-do"><span class="stdot"></span>Selesai</span></td></tr>
+          <tr><td>PAS Ganjil</td><td>2–14 Des 2026</td><td>X, XI, XII</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-do"><span class="stdot"></span>Selesai</span></td></tr>
+          <tr class="jadwal-group"><td colspan="6">Semester Genap 2026/2027</td></tr>
           <tr><td>PTS Genap</td><td>1–5 Feb 2027</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
           <tr><td>Uji Kompetensi Keahlian (UKK)</td><td>23 Mar–3 Apr 2027</td><td>XII (Semua Prodi)</td><td>08.00–16.00 WIB</td><td>Asesor Industri</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
           <tr><td>Ujian Sekolah Teori</td><td>6–17 Apr 2027</td><td>XII (Semua Prodi)</td><td>07.30–09.30 WIB</td><td>Guru Piket</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
           <tr><td>PAS Genap (X–XI)</td><td>1–12 Jun 2027</td><td>X, XI (Semua Prodi)</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-up"><span class="stdot"></span>Akan Datang</span></td></tr>
-          <tr><td>PAS Ganjil (lalu)</td><td>2–14 Des 2026</td><td>X, XI, XII</td><td>07.30–10.00 WIB</td><td>Guru Mapel</td><td><span class="stbadge st-do"><span class="stdot"></span>Selesai</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1037,7 +1046,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
         <div class="f-logo-icon">SMK<br>CAM</div>
         <div><div class="f-logo-name">SMKS Ciledug Al Musaddadiyah</div><div class="f-npsn">NPSN 20209207 · Akreditasi A</div></div>
       </div>
-      <p class="f-desc">Portal administrasi resmi. Melayani 217 peserta didik pada 7 program keahlian di Tarogong Kidul, Kabupaten Garut, Jawa Barat.</p>
+      <p class="f-desc">Portal administrasi resmi. Melayani 326 peserta didik pada 7 program keahlian di Tarogong Kidul, Kabupaten Garut, Jawa Barat.</p>
       <div class="f-contact">📍 Jl. Mayor Syamsu No. 2, Jayaraga, Kec. Tarogong Kidul, Kab. Garut 44151<br>👤 Kepala Sekolah: M. Nasrullah Ramdhan, M.Si</div>
     </div>
     <div class="f-col-wrap">
@@ -1296,7 +1305,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   // Untuk keamanan penuh (direkomendasikan), sambungkan ke server admin (lihat Code.gs)
   // agar verifikasi kata sandi dilakukan di server, bukan di browser.
   const LOCAL_ADMIN_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // sha256("admin123")
-  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbySVko842V1vYA_ywqfFzinOgjfmAS79CD1EzDzor8qfRaGc3AOvFP3nuqPO1u4X1Xk/exec'; // tempel URL Web App Google Apps Script (diakhiri /exec) di sini untuk login & sinkron aman
+  const WEBAPP_URL = ''; // tempel URL Web App Google Apps Script (diakhiri /exec) di sini untuk login & sinkron aman
   const LOCAL_MAX_FAILS = 5;
   const LOCAL_LOCKOUT_MS = 60 * 1000;
 
