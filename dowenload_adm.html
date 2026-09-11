@@ -790,7 +790,6 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     <a href="#jadwal">Jadwal Ujian</a>
     <a href="#pengumuman">Pengumuman</a>
     <a href="#administrasi">Administrasi</a>
-    <a href="#direktori">Guru &amp; Staff</a>
   </div>
   <div class="nav-actions">
     <button type="button" class="nav-cta" id="navAdminBtn">🔐 Login Admin</button>
@@ -808,7 +807,6 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     <a href="#jadwal">📅 Jadwal Ujian</a>
     <a href="#pengumuman">📢 Pengumuman</a>
     <a href="#administrasi">🗂 Administrasi</a>
-    <a href="#direktori">🪪 Guru &amp; Staff</a>
   </div>
 </div>
 
@@ -1027,18 +1025,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     </div>
   </div>
 
-  <!-- DIREKTORI GURU & STAFF -->
-  <div id="direktori" style="margin-top:8px">
-    <div class="sh"><div class="sh-left"><div class="sl">Kepegawaian</div><div class="st">Direktori Guru &amp; Staff</div></div><span style="font-size:12.5px;color:var(--text-3)" id="guruCountLabel">0 data</span></div>
-    <div class="guru-toolbar">
-      <a href="https://khanabdullohoke.github.io/idgurudanstaff/" target="_blank" rel="noopener">🪪 Cetak Kartu ID Guru &amp; Staff</a>
-      <a href="https://www.smkciledugalmusaddadiyah.sch.id/p/kartu-id-guru-dan-staff.html" target="_blank" rel="noopener">🌐 Sumber Data Resmi ↗</a>
-      <a href="https://www.smkciledugalmusaddadiyah.sch.id/p/rekapitulasi-presensi-siswa-permapel.html" target="_blank" rel="noopener">📊 Rekap Presensi Per Mapel ↗</a>
-    </div>
-    <div class="guru-grid" id="guruGrid">
-      <!-- diisi otomatis via JavaScript / Panel Admin -->
-    </div>
-  </div>
+  <!-- (Direktori Guru & Staff dihapus atas permintaan) -->
 
 </main>
 
@@ -1080,7 +1067,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
       <div class="admin-body">
         <div class="admin-login">
           <div class="admin-lock-icon">🔐</div>
-          <p>Masuk sebagai admin untuk memperbarui dokumen, direktori guru &amp; staff, dan data program keahlian pada portal ini.</p>
+          <p>Masuk sebagai admin untuk memperbarui dokumen, jadwal ujian, pengumuman, dan data program keahlian pada portal ini.</p>
           <input type="password" id="adminPass" placeholder="Masukkan kata sandi admin" autocomplete="off">
           <div class="admin-err" id="adminErr"></div>
           <button class="btn-a-primary" id="adminLoginBtn" type="button">Masuk Panel Admin</button>
@@ -1094,7 +1081,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
       <div class="admin-modal-hdr">
         <div>
           <h3>🗂 Panel Admin Portal</h3>
-          <span>Kelola dokumen, direktori guru, dan data kelas / program keahlian</span>
+          <span>Kelola dokumen, jadwal, pengumuman, dan data kelas / program keahlian</span>
         </div>
         <button class="admin-close" id="adminCloseBtn" type="button">✕</button>
       </div>
@@ -1102,7 +1089,6 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
         <div class="admin-tabs">
           <button class="admin-tab active" data-tab="dok" type="button">📄 Dokumen</button>
-          <button class="admin-tab" data-tab="guru" type="button">🪪 Guru &amp; Staff</button>
           <button class="admin-tab" data-tab="kelas" type="button">🏫 Kelas / Prodi</button>
           <button class="admin-tab" data-tab="jadwal" type="button">🗓 Jadwal Ujian</button>
           <button class="admin-tab" data-tab="pengumuman" type="button">📰 Pengumuman</button>
@@ -1152,25 +1138,6 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
             </div>
           </form>
           <div class="admin-list" id="dokList"></div>
-        </div>
-
-        <!-- TAB: GURU -->
-        <div class="admin-pane" data-pane="guru">
-          <form class="admin-form" id="formGuru">
-            <div class="form-row form-row-2">
-              <div><label>Nama Lengkap</label><input type="text" id="guruNama" required placeholder="Contoh: Dedi Supriadi, S.Pd"></div>
-              <div><label>Jabatan / Mapel</label><input type="text" id="guruJabatan" placeholder="Contoh: Guru Produktif TKJ"></div>
-            </div>
-            <div class="form-row form-row-2">
-              <div><label>Program Keahlian</label><input type="text" id="guruProdi" placeholder="Contoh: TKJ / Wali Kelas XI"></div>
-              <div><label>Link Kartu ID (opsional)</label><input type="url" id="guruLink" placeholder="https://..."></div>
-            </div>
-            <div class="admin-actions">
-              <button type="submit" class="btn-a-primary">➕ Tambah / Perbarui Data Guru</button>
-              <button type="button" class="btn-a-ghost" id="guruResetBtn">Reset Form</button>
-            </div>
-          </form>
-          <div class="admin-list" id="guruList"></div>
         </div>
 
         <!-- TAB: KELAS / PRODI -->
@@ -1285,7 +1252,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
         <!-- TAB: REFERENSI -->
         <div class="admin-pane" data-pane="ref">
-          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;line-height:1.6">Buka sumber data resmi berikut untuk menyalin data kelas terbaru dan data guru sebelum menginput ke form di sebelah kiri.</p>
+          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;line-height:1.6">Buka sumber data resmi berikut untuk menyalin data kelas terbaru sebelum menginput ke form di sebelah kiri.</p>
           <div class="admin-ref-list">
             <div class="admin-ref-item"><div><strong>Rekapitulasi Presensi Siswa Per Mapel</strong>Data kehadiran &amp; kelas terbaru per mata pelajaran.</div><a href="https://www.smkciledugalmusaddadiyah.sch.id/p/rekapitulasi-presensi-siswa-permapel.html" target="_blank" rel="noopener">Buka ↗</a></div>
             <div class="admin-ref-item"><div><strong>Kartu ID Guru dan Staff</strong>Direktori &amp; generator kartu identitas guru/staff.</div><a href="https://www.smkciledugalmusaddadiyah.sch.id/p/kartu-id-guru-dan-staff.html" target="_blank" rel="noopener">Buka ↗</a></div>
@@ -1349,7 +1316,7 @@ document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => {
 });
 
 /* ── SCROLL-SPY ─────────────────────────────── */
-const sections = ['dokumen','jadwal','pengumuman','administrasi','direktori'].map(id => document.getElementById(id)).filter(Boolean);
+const sections = ['dokumen','jadwal','pengumuman','administrasi'].map(id => document.getElementById(id)).filter(Boolean);
 const allNavLinks = document.querySelectorAll('.nav-links a, .nav-drawer a');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -1395,29 +1362,26 @@ const fuObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = 'paused'; fuObs.observe(el); });
 
 /* ═══════════════════════════════════════════════════════════
-   FASILITAS ADMIN — kelola Dokumen, Guru & Staff, Kelas/Prodi
+   FASILITAS ADMIN — kelola Dokumen, Jadwal, Pengumuman, Kelas/Prodi, Link Administrasi
    Sumber referensi data (buka manual saat input):
    - Rekap Presensi Per Mapel : /p/rekapitulasi-presensi-siswa-permapel.html
    - Kartu ID Guru & Staff    : /p/kartu-id-guru-dan-staff.html
    - Portal Utama SMK CALM    : https://www.smkciledugalmusaddadiyah.sch.id/
 ═══════════════════════════════════════════════════════════ */
 (function(){
-  // Hash SHA-256 dari kata sandi mode demo lokal ("admin123") — dipakai HANYA jika
-  // WEBAPP_URL belum diisi. Kata sandi asli tidak pernah tersimpan di source.
-  // Untuk keamanan penuh (direkomendasikan), sambungkan ke server admin (lihat Code.gs)
-  // agar verifikasi kata sandi dilakukan di server, bukan di browser.
-  const LOCAL_ADMIN_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // sha256("admin123")
-  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbySVko842V1vYA_ywqfFzinOgjfmAS79CD1EzDzor8qfRaGc3AOvFP3nuqPO1u4X1Xk/exec'; // tempel URL Web App Google Apps Script (diakhiri /exec) di sini untuk login & sinkron aman
-  const LOCAL_MAX_FAILS = 5;
-  const LOCAL_LOCKOUT_MS = 60 * 1000;
+  // ⚠️ Keamanan: TIDAK ADA mode login lokal/offline. Verifikasi kata sandi admin
+  // WAJIB dilakukan di server (lihat Code.gs) — sebelumnya versi lama file ini
+  // sempat menyimpan hash password demo langsung di source code yang bisa dibaca
+  // siapa pun lewat "View Source". Itu celah kritis dan sudah dihapus total.
+  // Selama WEBAPP_URL di bawah masih kosong, login admin akan DINONAKTIFKAN
+  // (bukan dibuka dengan password bawaan) sampai server admin disambungkan.
+  const WEBAPP_URL = ''; // tempel URL Web App Google Apps Script (diakhiri /exec) di sini untuk login & sinkron aman
 
   let isAuthed = false;
   let sessionToken = null;
-  let localFails = 0;
-  let localLockUntil = 0;
-  let editing = { dok: null, guru: null, kelas: null, jadwal: null, pengumuman: null };
+  let editing = { dok: null, kelas: null, jadwal: null, pengumuman: null };
 
-  const state = { documents: [], guru: [], kelas: [], jadwal: [], pengumuman: [], adminLinks: [] };
+  const state = { documents: [], kelas: [], jadwal: [], pengumuman: [], adminLinks: [] };
   let uid = 1;
   const nextId = () => 'a' + (uid++);
 
@@ -1425,10 +1389,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
   const esc = s => (s || '').toString().replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-
-  async function sha256Hex(text){
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  // Keamanan: hanya izinkan skema URL yang aman untuk href dinamis dari data admin/sheet —
+  // menutup celah XSS lewat "javascript:"/"data:" URI yang bisa dieksekusi saat link diklik.
+  function safeUrl(u){
+    const v = (u || '').toString().trim();
+    if(!v) return '#';
+    if(/^(https?:|mailto:|tel:)/i.test(v)) return v;
+    if(v === '#' || v.startsWith('/') || v.startsWith('#')) return v;
+    return '#';
   }
 
   function toast(msg){
@@ -1463,13 +1431,11 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       const json = await res.json();
       if(json.ok){
         state.documents = json.data.documents || [];
-        state.guru = json.data.guru || [];
         state.kelas = json.data.kelas || [];
         state.jadwal = json.data.jadwal || [];
         state.pengumuman = json.data.pengumuman || [];
         state.adminLinks = json.data.adminlinks || [];
         renderAllDocs();
-        renderGuru();
         state.kelas.forEach(applyKelasToGrid);
         renderKelasList();
         renderAllJadwal();
@@ -1552,13 +1518,17 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#adminErr').style.display = 'none';
     $('#adminPass').value = '';
     const badge = $('#adminAuthHint');
+    const passInput = $('#adminPass');
     if(gsActive()){
-      // mode aman terverifikasi — tidak perlu menampilkan keterangan apa pun ke pengunjung
       badge.style.display = 'none';
+      passInput.disabled = false;
+      passInput.placeholder = 'Masukkan kata sandi admin';
     } else {
       badge.className = 'auth-badge ab-demo';
-      badge.textContent = '⚠️ Mode demo — hubungkan ke server untuk keamanan penuh';
+      badge.textContent = '🔒 Login admin dinonaktifkan — server otentikasi (WEBAPP_URL) belum tersambung. Hubungi pengelola teknis situs.';
       badge.style.display = 'flex';
+      passInput.disabled = true;
+      passInput.placeholder = 'Login nonaktif — server belum tersambung';
     }
     updateLoginLockUI();
   }
@@ -1574,12 +1544,9 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   }
   function updateLoginLockUI(){
     const btn = $('#adminLoginBtn');
-    const remain = localLockUntil - Date.now();
-    if(!gsActive() && remain > 0){
+    if(!gsActive()){
       btn.disabled = true;
-      const secs = Math.ceil(remain / 1000);
-      btn.textContent = `Terkunci — coba lagi ${secs}s`;
-      setTimeout(updateLoginLockUI, 1000);
+      btn.textContent = 'Login Nonaktif (Server Belum Tersambung)';
     } else {
       btn.disabled = false;
       btn.textContent = 'Masuk Panel Admin';
@@ -1587,55 +1554,36 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   }
 
   async function tryLogin(){
+    if(!gsActive()){
+      showErr('Login admin dinonaktifkan: server otentikasi belum tersambung (isi WEBAPP_URL di kode sumber terlebih dahulu). Tidak ada kata sandi bawaan yang aktif.');
+      return;
+    }
     const val = $('#adminPass').value;
     if(!val){ showErr('Masukkan kata sandi terlebih dahulu.'); return; }
     const btn = $('#adminLoginBtn');
 
-    if(gsActive()){
-      // ── mode aman: verifikasi kata sandi & rate-limit dilakukan di server ──
-      btn.disabled = true; btn.textContent = 'Memeriksa...';
-      try {
-        const res = await fetch(WEBAPP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'login', password: val }),
-        });
-        const json = await res.json();
-        if(json.ok){
-          isAuthed = true;
-          sessionToken = json.token;
-          showPanel();
-          toast('Berhasil masuk sebagai admin');
-          gsFetchAll();
-        } else {
-          showErr(json.error || 'Kata sandi salah.');
-        }
-      } catch(err){
-        showErr('Tidak dapat menghubungi server autentikasi. Periksa WEBAPP_URL / koneksi internet.');
-      }
-      btn.disabled = false; btn.textContent = 'Masuk Panel Admin';
-      return;
-    }
-
-    // ── mode demo lokal (fallback): hash SHA-256 + rate-limit di browser ──
-    if(Date.now() < localLockUntil){ updateLoginLockUI(); return; }
-    const hash = await sha256Hex(val);
-    if(hash === LOCAL_ADMIN_HASH){
-      isAuthed = true;
-      localFails = 0;
-      showPanel();
-      toast('Berhasil masuk sebagai admin (mode demo lokal)');
-    } else {
-      localFails++;
-      if(localFails >= LOCAL_MAX_FAILS){
-        localLockUntil = Date.now() + LOCAL_LOCKOUT_MS;
-        localFails = 0;
-        showErr('Terlalu banyak percobaan gagal. Coba lagi sebentar lagi.');
-        updateLoginLockUI();
+    // ── verifikasi kata sandi & rate-limit dilakukan sepenuhnya di server ──
+    btn.disabled = true; btn.textContent = 'Memeriksa...';
+    try {
+      const res = await fetch(WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'login', password: val }),
+      });
+      const json = await res.json();
+      if(json.ok){
+        isAuthed = true;
+        sessionToken = json.token;
+        showPanel();
+        toast('Berhasil masuk sebagai admin');
+        gsFetchAll();
       } else {
-        showErr(`Kata sandi salah (${localFails}/${LOCAL_MAX_FAILS} percobaan).`);
+        showErr(json.error || 'Kata sandi salah.');
       }
+    } catch(err){
+      showErr('Tidak dapat menghubungi server autentikasi. Periksa WEBAPP_URL / koneksi internet.');
     }
+    btn.disabled = false; btn.textContent = 'Masuk Panel Admin';
   }
 
   $('#fabAdmin').addEventListener('click', openAdmin);
@@ -1688,14 +1636,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       <div class="doc-meta"><span class="badge ${badgeClass}">${d.tipe.toUpperCase()}</span>${d.baru ? '<span class="badge b-new">BARU</span>' : ''}<span class="doc-date">📅 ${esc(d.tanggal || '')}</span></div>
       <div class="doc-title">${esc(d.judul)}</div>
       <div class="doc-desc">${esc(d.desk || '')}</div>
-      <div class="doc-footer"><span class="doc-size">📎 ${esc(d.ukuran || '')}</span><a href="${esc(d.link)}" target="_blank" rel="noopener" class="btn-dl">⬇ Unduh</a></div>`;
+      <div class="doc-footer"><span class="doc-size">📎 ${esc(d.ukuran || '')}</span><a href="${esc(safeUrl(d.link))}" target="_blank" rel="noopener" class="btn-dl">⬇ Unduh</a></div>`;
     attachDownloadFeedback(el.querySelector('.btn-dl'));
     return el;
   }
 
   function renderAdminItem(d){
     const el = document.createElement('a');
-    el.href = d.link; el.target = '_blank'; el.rel = 'noopener';
+    el.href = safeUrl(d.link); el.target = '_blank'; el.rel = 'noopener';
     el.className = 'a-item';
     el.dataset.id = d.id;
     el.innerHTML = `<div class="a-item-l"><span class="a-ico">📎</span>${esc(d.judul)}</div>${d.baru ? '<span class="i-new">BARU</span>' : '<span class="a-arr">›</span>'}`;
@@ -1838,73 +1786,6 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     toast('Dokumen tersimpan: ' + data.judul);
   });
   $('#dokResetBtn').addEventListener('click', () => { $('#formDok').reset(); editing.dok = null; $('#dokUploadStatus').textContent = ''; });
-
-  /* ═══ GURU & STAFF ═══ */
-  function initials(name){
-    return (name || '?').trim().split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase();
-  }
-  function renderGuru(){
-    const grid = $('#guruGrid');
-    $('#guruCountLabel').textContent = state.guru.length + ' data';
-    if(!state.guru.length){
-      grid.innerHTML = '<div class="guru-empty">Belum ada data guru & staff. Tambahkan melalui tombol ⚙️ Admin, atau lihat direktori resmi di tautan referensi.</div>';
-    } else {
-      grid.innerHTML = state.guru.map(g => `
-        <div class="guru-card">
-          <div class="guru-avatar">${esc(initials(g.nama))}</div>
-          <div style="min-width:0">
-            <div class="guru-name">${esc(g.nama)}</div>
-            <div class="guru-role">${esc(g.jabatan || '')}${g.prodi ? ' · ' + esc(g.prodi) : ''}</div>
-            <div class="guru-links">
-              ${g.link ? `<a href="${esc(g.link)}" target="_blank" rel="noopener">🪪 Kartu ID</a>` : `<a href="https://khanabdullohoke.github.io/idgurudanstaff/" target="_blank" rel="noopener">🪪 Cetak ID</a>`}
-              <a href="https://www.smkciledugalmusaddadiyah.sch.id/p/presensi-guru-dan-staff.html" target="_blank" rel="noopener">📊 Presensi</a>
-            </div>
-          </div>
-        </div>`).join('');
-    }
-    renderGuruList();
-  }
-  function renderGuruList(){
-    const wrap = $('#guruList');
-    if(!state.guru.length){ wrap.innerHTML = ''; return; }
-    wrap.innerHTML = state.guru.map(g => `
-      <div class="admin-list-item">
-        <div class="li-main"><div class="li-title">${esc(g.nama)}</div><div class="li-sub">${esc(g.jabatan || '-')}</div></div>
-        <div class="li-btns"><button type="button" data-edit="${g.id}">✎</button><button type="button" data-del="${g.id}">🗑</button></div>
-      </div>`).join('');
-    wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editGuru(b.dataset.edit)));
-    wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteGuru(b.dataset.del)));
-  }
-  function editGuru(id){
-    const g = state.guru.find(x => x.id === id); if(!g) return;
-    editing.guru = id;
-    $('#guruNama').value = g.nama; $('#guruJabatan').value = g.jabatan || '';
-    $('#guruProdi').value = g.prodi || ''; $('#guruLink').value = g.link || '';
-    toast('Mengedit: ' + g.nama);
-  }
-  function deleteGuru(id){
-    const item = state.guru.find(x => x.id === id);
-    state.guru = state.guru.filter(x => x.id !== id);
-    renderGuru();
-    if(item) gsDelete('guru', item);
-    toast('Data guru dihapus');
-  }
-
-  $('#formGuru').addEventListener('submit', e => {
-    e.preventDefault();
-    const data = { id: editing.guru || nextId(), nama: $('#guruNama').value.trim(), jabatan: $('#guruJabatan').value.trim(), prodi: $('#guruProdi').value.trim(), link: $('#guruLink').value.trim() };
-    if(!data.nama){ toast('Nama guru wajib diisi'); return; }
-    if(editing.guru){
-      const idx = state.guru.findIndex(x => x.id === editing.guru);
-      if(idx > -1) state.guru[idx] = data;
-      editing.guru = null;
-    } else { state.guru.push(data); }
-    renderGuru();
-    gsUpsert('guru', data);
-    e.target.reset();
-    toast('Data guru tersimpan: ' + data.nama);
-  });
-  $('#guruResetBtn').addEventListener('click', () => { $('#formGuru').reset(); editing.guru = null; });
 
   /* ═══ KELAS / PRODI ═══ */
   function renderKelasList(){
@@ -2138,7 +2019,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   function applyAdminLink(key, link){
     const el = document.querySelector(`.a-item[data-key="${key}"]`);
     if(!el) return;
-    if(link){ el.href = link; el.target = '_blank'; el.rel = 'noopener'; }
+    if(link){ el.href = safeUrl(link); el.target = '_blank'; el.rel = 'noopener'; }
     else { el.href = '#'; el.removeAttribute('target'); el.removeAttribute('rel'); }
   }
   function renderAllAdminLinks(){
@@ -2199,13 +2080,11 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       try {
         const parsed = JSON.parse(ev.target.result);
         state.documents = Array.isArray(parsed.documents) ? parsed.documents : [];
-        state.guru = Array.isArray(parsed.guru) ? parsed.guru : [];
         state.kelas = Array.isArray(parsed.kelas) ? parsed.kelas : [];
         state.jadwal = Array.isArray(parsed.jadwal) ? parsed.jadwal : [];
         state.pengumuman = Array.isArray(parsed.pengumuman) ? parsed.pengumuman : [];
         state.adminLinks = Array.isArray(parsed.adminLinks) ? parsed.adminLinks : [];
         renderAllDocs();
-        renderGuru();
         state.kelas.forEach(applyKelasToGrid);
         renderKelasList();
         renderAllJadwal();
@@ -2222,7 +2101,6 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
 
   /* ── init ── */
   renderDokList();
-  renderGuru();
   renderKelasList();
   renderJadwalList();
   renderPengumumanList();
