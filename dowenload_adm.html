@@ -1404,8 +1404,11 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   let editing = { dok: null, kelas: null, jadwal: null, pengumuman: null };
 
   const state = { documents: [], kelas: [], jadwal: [], pengumuman: [], adminLinks: [], notifikasi: [] };
-  let uid = 1;
-  const nextId = () => 'a' + (uid++);
+  // ID unik yang tidak bergantung pada berapa kali halaman dibuka ulang — sebelumnya
+  // counter ini SELALU mulai dari 1 tiap kali halaman dimuat ("a1", "a2", ...), sehingga
+  // item baru pertama di sesi manapun berisiko bertabrakan ID dengan item lama dari sesi
+  // sebelumnya, dan diam-diam MENIMPA baris lama itu di Sheets alih-alih menambah baris baru.
+  const nextId = () => 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
   /* ── helpers ── */
   const $ = sel => document.querySelector(sel);
@@ -1499,7 +1502,11 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     if(!gsActive()) return;
     setGsStatus('Menyinkronkan data terbaru...');
     try {
-      const res = await fetch(WEBAPP_URL, { method: 'GET' });
+      // Penangkal cache: URL Web App Apps Script dikenal sering ikut ter-cache oleh
+      // browser (permintaan GET dianggap "sama" berkali-kali), sehingga refresh halaman
+      // bisa menampilkan data LAMA walau penyimpanan ke Sheets sebenarnya sudah berhasil.
+      // Parameter waktu unik + cache:'no-store' memaksa permintaan selalu benar-benar baru.
+      const res = await fetch(WEBAPP_URL + '?t=' + Date.now(), { method: 'GET', cache: 'no-store' });
       const json = await res.json();
       if(json.ok){
         state.documents = json.data.documents || [];
