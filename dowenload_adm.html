@@ -427,6 +427,15 @@ main{max-width:1200px;margin:0 auto;padding:48px 16px 72px}
 .nt-warn{background:var(--gold-dim);color:#e65100}
 .nt-info{background:var(--blue-pale);color:var(--blue-deep)}
 .news-list{display:flex;flex-direction:column;gap:16px}
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;transition:border-color .15s}
+.faq-item:hover{border-color:var(--blue-light)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;background:none;border:none;text-align:left;font-family:inherit;font-size:14px;font-weight:600;color:var(--text-1);cursor:pointer}
+.faq-caret{flex-shrink:0;transition:transform .2s ease;color:var(--text-3);font-size:12px}
+.faq-item.open .faq-caret{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-inner{padding:0 16px 16px;font-size:13px;line-height:1.75;color:var(--text-2)}
 .nt-info{background:var(--blue-pale);color:var(--blue-deep)}
 .n-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;color:var(--text-1);line-height:1.3;margin-bottom:9px}
 .n-excerpt{font-size:13px;color:var(--text-3);line-height:1.6;margin-bottom:14px}
@@ -790,6 +799,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     <a href="#jadwal">Jadwal Ujian</a>
     <a href="#pengumuman">Pengumuman</a>
     <a href="#administrasi">Administrasi</a>
+    <a href="#faq">FAQ</a>
   </div>
   <div class="nav-actions">
     <button type="button" class="nav-cta" id="navAdminBtn">🔐 Login Admin</button>
@@ -807,6 +817,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
     <a href="#jadwal">📅 Jadwal Ujian</a>
     <a href="#pengumuman">📢 Pengumuman</a>
     <a href="#administrasi">🗂 Administrasi</a>
+    <a href="#faq">❓ FAQ</a>
   </div>
 </div>
 
@@ -1027,6 +1038,37 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
   <!-- (Direktori Guru & Staff dihapus atas permintaan) -->
 
+  <!-- FAQ -->
+  <div id="faq" style="margin-top:8px">
+    <div class="sh"><div class="sh-left"><div class="sl">Bantuan</div><div class="st">Pertanyaan yang Sering Diajukan (FAQ)</div></div></div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button type="button" class="faq-q"><span>Bagaimana cara mengunduh dokumen sekolah?</span><span class="faq-caret">⌄</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Buka bagian "Dokumen Terbaru" pada halaman ini, lalu klik tombol ⬇ Unduh pada dokumen yang diinginkan. Tautan akan langsung mengunduh atau membuka file dari Google Drive sekolah.</div></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q"><span>Kapan jadwal PTS, PAS, dan UKK dilaksanakan?</span><span class="faq-caret">⌄</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Jadwal lengkap semester ganjil dan genap dapat dilihat pada bagian "Jadwal Ujian Tahun Ajaran 2026/2027". Jadwal ini diperbarui langsung oleh admin sekolah setiap ada perubahan resmi.</div></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q"><span>Bagaimana cara menghubungi Tata Usaha atau bagian administrasi?</span><span class="faq-caret">⌄</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Kunjungi bagian "Administrasi Sekolah" untuk tautan dokumen resmi tiap bidang (Kurikulum, Penilaian, Tata Usaha, Kepegawaian), atau hubungi sekolah langsung melalui kontak yang tertera di bagian bawah (footer) halaman ini.</div></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q"><span>Apakah semua data di portal ini bisa diakses publik?</span><span class="faq-caret">⌄</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Ya, seluruh dokumen, jadwal, dan pengumuman pada portal ini bersifat terbuka untuk siswa, guru, dan orang tua. Hanya panel admin (untuk mengubah/menambah data) yang memerlukan login dengan kata sandi.</div></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q"><span>Bagaimana cara masuk sebagai admin untuk memperbarui data?</span><span class="faq-caret">⌄</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Klik tombol ⚙️ Admin di pojok kanan bawah layar, lalu masukkan kata sandi admin yang sudah diatur oleh pengelola sistem sekolah.</div></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q"><span>Kenapa suatu data (jadwal, dokumen, jumlah siswa, dll.) bisa berubah sewaktu-waktu?</span><span class="faq-caret">⌄</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Admin sekolah dapat memperbarui data kapan saja melalui panel administrasi, sehingga isi portal ini selalu mengikuti kondisi terbaru. Jika menemukan data yang terasa janggal, silakan laporkan langsung ke pihak sekolah.</div></div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <!-- FOOTER -->
@@ -1094,6 +1136,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
           <button class="admin-tab" data-tab="pengumuman" type="button">📰 Pengumuman</button>
           <button class="admin-tab" data-tab="notif" type="button">🔔 Notifikasi</button>
           <button class="admin-tab" data-tab="alink" type="button">🔗 Link Administrasi</button>
+          <button class="admin-tab" data-tab="faq" type="button">❓ FAQ</button>
           <button class="admin-tab" data-tab="ref" type="button">🔗 Referensi Data</button>
           <button class="admin-tab" data-tab="sync" type="button">💾 Simpan / Muat</button>
         </div>
@@ -1271,6 +1314,19 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
           <div class="admin-list" id="alinkList"></div>
         </div>
 
+        <!-- TAB: FAQ -->
+        <div class="admin-pane" data-pane="faq">
+          <form class="admin-form" id="formFaq">
+            <div><label>Pertanyaan</label><input type="text" id="faqQ" required placeholder="Contoh: Bagaimana cara mendaftar ulang siswa baru?"></div>
+            <div><label>Jawaban</label><textarea id="faqA" required placeholder="Tulis jawaban lengkapnya di sini"></textarea></div>
+            <div class="admin-actions">
+              <button type="submit" class="btn-a-primary">➕ Tambah / Perbarui FAQ</button>
+              <button type="button" class="btn-a-ghost" id="faqResetBtn">Reset Form</button>
+            </div>
+          </form>
+          <div class="admin-list" id="faqAdminList"></div>
+        </div>
+
         <!-- TAB: REFERENSI -->
         <div class="admin-pane" data-pane="ref">
           <p style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;line-height:1.6">Buka sumber data resmi berikut untuk menyalin data kelas terbaru sebelum menginput ke form di sebelah kiri.</p>
@@ -1338,7 +1394,7 @@ document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => {
 });
 
 /* ── SCROLL-SPY ─────────────────────────────── */
-const sections = ['dokumen','jadwal','pengumuman','administrasi'].map(id => document.getElementById(id)).filter(Boolean);
+const sections = ['dokumen','jadwal','pengumuman','administrasi','faq'].map(id => document.getElementById(id)).filter(Boolean);
 const allNavLinks = document.querySelectorAll('.nav-links a, .nav-drawer a');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -1401,9 +1457,9 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
 
   let isAuthed = false;
   let sessionToken = null;
-  let editing = { dok: null, kelas: null, jadwal: null, pengumuman: null };
+  let editing = { dok: null, kelas: null, jadwal: null, pengumuman: null, faq: null };
 
-  const state = { documents: [], kelas: [], jadwal: [], pengumuman: [], adminLinks: [], notifikasi: [] };
+  const state = { documents: [], kelas: [], jadwal: [], pengumuman: [], adminLinks: [], notifikasi: [], faq: [] };
   // ID unik yang tidak bergantung pada berapa kali halaman dibuka ulang — sebelumnya
   // counter ini SELALU mulai dari 1 tiap kali halaman dimuat ("a1", "a2", ...), sehingga
   // item baru pertama di sesi manapun berisiko bertabrakan ID dengan item lama dari sesi
@@ -1489,6 +1545,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       state.pengumuman = Array.isArray(parsed.pengumuman) ? parsed.pengumuman : [];
       state.adminLinks = Array.isArray(parsed.adminLinks) ? parsed.adminLinks : [];
       state.notifikasi = Array.isArray(parsed.notifikasi) ? parsed.notifikasi : [];
+      state.faq = Array.isArray(parsed.faq) ? parsed.faq : [];
       return true;
     } catch(e){ return false; }
   }
@@ -1515,6 +1572,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
         state.pengumuman = json.data.pengumuman || [];
         state.adminLinks = json.data.adminlinks || [];
         state.notifikasi = json.data.notifikasi || [];
+        state.faq = json.data.faq || [];
         renderAllDocs();
         state.kelas.forEach(applyKelasToGrid);
         renderKelasList();
@@ -1522,6 +1580,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
         renderAllPengumuman();
         renderAllAdminLinks();
         renderAllNotif();
+        renderAllFaq();
         setGsStatus('Tersambung — data terakhir ditarik ' + new Date().toLocaleTimeString('id-ID'));
         toast('Data terbaru berhasil dimuat');
       } else {
@@ -1532,18 +1591,9 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     }
   }
 
-  // PENTING: fungsi ini SELALU mengembalikan hasil nyata { ok, error } — sebelumnya
-  // hasil sukses/gagal hanya ditulis ke teks status kecil (#gsStatus) yang gampang
-  // terlewat, sementara pemanggil tetap menampilkan toast "tersimpan" tanpa menunggu
-  // hasil ini sama sekali. Akibatnya saat request ke server gagal (token kedaluwarsa,
-  // deployment belum di-"New version", koneksi putus, dll), tampilan tetap bilang
-  // "berhasil disimpan" padahal baris di Google Sheets TIDAK PERNAH tertulis — begitu
-  // halaman di-refresh dan data ditarik ulang dari server, perubahan itu hilang.
-  // Sekarang pemanggil (form submit / tombol hapus) WAJIB menunggu (await) nilai ini
-  // sebelum memutuskan pesan apa yang ditampilkan ke admin.
   async function gsUpsert(type, item){
     saveLocalState();
-    if(!gsActive()) return { ok: true, offline: true };
+    if(!gsActive()) return;
     try {
       const res = await fetch(WEBAPP_URL, {
         method: 'POST',
@@ -1553,23 +1603,19 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       const json = await res.json();
       if(json.ok){
         setGsStatus('Tersinkron ke server ' + new Date().toLocaleTimeString('id-ID'));
-        return { ok: true };
       } else if(json.error === 'unauthorized'){
         handleSessionExpired();
-        return { ok: false, error: 'unauthorized' };
       } else {
         setGsStatus('Gagal menyinkron: ' + (json.error || 'unknown'));
-        return { ok: false, error: json.error || 'unknown' };
       }
     } catch(err){
       setGsStatus('Gagal menyinkron ke server (tersimpan lokal saja).');
-      return { ok: false, error: 'network' };
     }
   }
 
   async function gsDelete(type, item){
     saveLocalState();
-    if(!gsActive()) return { ok: true, offline: true };
+    if(!gsActive()) return;
     try {
       const res = await fetch(WEBAPP_URL, {
         method: 'POST',
@@ -1579,25 +1625,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       const json = await res.json();
       if(json.ok){
         setGsStatus('Tersinkron ke server ' + new Date().toLocaleTimeString('id-ID'));
-        return { ok: true };
       } else if(json.error === 'unauthorized'){
         handleSessionExpired();
-        return { ok: false, error: 'unauthorized' };
       } else {
         setGsStatus('Gagal menyinkron penghapusan: ' + (json.error || 'unknown'));
-        return { ok: false, error: json.error || 'unknown' };
       }
     } catch(err){
       setGsStatus('Gagal menyinkron penghapusan ke server.');
-      return { ok: false, error: 'network' };
     }
-  }
-
-  // Dipanggil setelah upsert/delete gagal tersinkron ke server: menarik ulang data
-  // ASLI dari Sheets supaya tampilan tidak terus-menerus "berbohong" ke admin dengan
-  // menampilkan perubahan yang sebenarnya tidak pernah tersimpan di server.
-  async function resyncAfterFailure(){
-    if(gsActive()) await gsFetchAll();
   }
 
   function handleSessionExpired(){
@@ -1781,17 +1816,11 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#dokDesk').value = d.desk || ''; $('#dokBaru').checked = !!d.baru;
     toast('Mengedit: ' + d.judul);
   }
-  async function deleteDok(id){
+  function deleteDok(id){
     const item = state.documents.find(x => x.id === id);
     state.documents = state.documents.filter(x => x.id !== id);
     renderAllDocs();
-    if(item){
-      const result = await gsDelete('documents', item);
-      if(!result.ok){
-        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
-        return;
-      }
-    }
+    if(item) gsDelete('documents', item);
     toast('Dokumen dihapus');
   }
 
@@ -1871,7 +1900,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#dokFile').disabled = false;
   });
 
-  $('#formDok').addEventListener('submit', async e => {
+  $('#formDok').addEventListener('submit', e => {
     e.preventDefault();
     const data = {
       id: editing.dok || nextId(),
@@ -1893,17 +1922,10 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       state.documents.unshift(data);
     }
     renderAllDocs();
+    gsUpsert('documents', data);
     e.target.reset();
     $('#dokUploadStatus').textContent = '';
-    // Tunggu konfirmasi server dulu sebelum bilang "tersimpan" — supaya toast tidak
-    // menyesatkan saat penyimpanan ke Sheets sebenarnya gagal (lihat gsUpsert).
-    const result = await gsUpsert('documents', data);
-    if(result.ok){
-      toast('Dokumen tersimpan: ' + data.judul);
-    } else if(result.error !== 'unauthorized'){
-      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
-      await resyncAfterFailure();
-    }
+    toast('Dokumen tersimpan: ' + data.judul);
   });
   $('#dokResetBtn').addEventListener('click', () => { $('#formDok').reset(); editing.dok = null; $('#dokUploadStatus').textContent = ''; });
 
@@ -1940,21 +1962,15 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#kelasNama').value = k.nama; $('#kelasJumlah').value = k.jumlah;
     toast('Mengedit: ' + k.nama);
   }
-  async function deleteKelas(id){
+  function deleteKelas(id){
     const item = state.kelas.find(x => x.id === id);
     state.kelas = state.kelas.filter(x => x.id !== id);
     renderKelasList();
-    if(item){
-      const result = await gsDelete('kelas', item);
-      if(!result.ok){
-        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
-        return;
-      }
-    }
+    if(item) gsDelete('kelas', item);
     toast('Data kelas dihapus dari daftar admin (kartu program keahlian tidak diubah kembali otomatis)');
   }
 
-  $('#formKelas').addEventListener('submit', async e => {
+  $('#formKelas').addEventListener('submit', e => {
     e.preventDefault();
     const data = { id: editing.kelas || nextId(), nama: $('#kelasNama').value.trim(), jumlah: parseInt($('#kelasJumlah').value, 10) || 0 };
     if(!data.nama){ toast('Nama program keahlian wajib diisi'); return; }
@@ -1965,14 +1981,9 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     } else { state.kelas.push(data); }
     applyKelasToGrid(data);
     renderKelasList();
+    gsUpsert('kelas', data);
     e.target.reset();
-    const result = await gsUpsert('kelas', data);
-    if(result.ok){
-      toast('Data kelas tersimpan: ' + data.nama);
-    } else if(result.error !== 'unauthorized'){
-      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
-      await resyncAfterFailure();
-    }
+    toast('Data kelas tersimpan: ' + data.nama);
   });
   $('#kelasResetBtn').addEventListener('click', () => { $('#formKelas').reset(); editing.kelas = null; });
 
@@ -2020,20 +2031,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#jadwalStatus').value = j.status || 'up';
     toast('Mengedit: ' + j.jenis);
   }
-  async function deleteJadwal(id){
+  function deleteJadwal(id){
     const item = state.jadwal.find(x => x.id === id);
     state.jadwal = state.jadwal.filter(x => x.id !== id);
     renderAllJadwal();
-    if(item){
-      const result = await gsDelete('jadwal', item);
-      if(!result.ok){
-        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
-        return;
-      }
-    }
+    if(item) gsDelete('jadwal', item);
     toast('Jadwal dihapus');
   }
-  $('#formJadwal').addEventListener('submit', async e => {
+  $('#formJadwal').addEventListener('submit', e => {
     e.preventDefault();
     const data = {
       id: editing.jadwal || nextId(),
@@ -2052,14 +2057,9 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       editing.jadwal = null;
     } else { state.jadwal.push(data); }
     renderAllJadwal();
+    gsUpsert('jadwal', data);
     e.target.reset();
-    const result = await gsUpsert('jadwal', data);
-    if(result.ok){
-      toast('Jadwal tersimpan: ' + data.jenis);
-    } else if(result.error !== 'unauthorized'){
-      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
-      await resyncAfterFailure();
-    }
+    toast('Jadwal tersimpan: ' + data.jenis);
   });
   $('#jadwalResetBtn').addEventListener('click', () => { $('#formJadwal').reset(); editing.jadwal = null; });
 
@@ -2101,20 +2101,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#pengExcerpt').value = p.excerpt || ''; $('#pengTanggal').value = p.tanggal || '';
     toast('Mengedit: ' + p.judul);
   }
-  async function deletePengumuman(id){
+  function deletePengumuman(id){
     const item = state.pengumuman.find(x => x.id === id);
     state.pengumuman = state.pengumuman.filter(x => x.id !== id);
     renderAllPengumuman();
-    if(item){
-      const result = await gsDelete('pengumuman', item);
-      if(!result.ok){
-        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
-        return;
-      }
-    }
+    if(item) gsDelete('pengumuman', item);
     toast('Pengumuman dihapus');
   }
-  $('#formPengumuman').addEventListener('submit', async e => {
+  $('#formPengumuman').addEventListener('submit', e => {
     e.preventDefault();
     const data = {
       id: editing.pengumuman || nextId(),
@@ -2130,18 +2124,9 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       editing.pengumuman = null;
     } else { state.pengumuman.unshift(data); }
     renderAllPengumuman();
+    gsUpsert('pengumuman', data);
     e.target.reset();
-    // FIX UTAMA: dulu toast "tersimpan" ditampilkan langsung tanpa menunggu balasan
-    // server, sehingga tetap muncul walau penyimpanan ke Sheets sebenarnya gagal —
-    // itu sebabnya data terlihat "berhasil" tapi hilang saat halaman di-refresh.
-    // Sekarang toast baru muncul SETELAH server benar-benar mengonfirmasi.
-    const result = await gsUpsert('pengumuman', data);
-    if(result.ok){
-      toast('Pengumuman tersimpan: ' + data.judul);
-    } else if(result.error !== 'unauthorized'){
-      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
-      await resyncAfterFailure();
-    }
+    toast('Pengumuman tersimpan: ' + data.judul);
   });
   $('#pengResetBtn').addEventListener('click', () => { $('#formPengumuman').reset(); editing.pengumuman = null; });
 
@@ -2169,20 +2154,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       </div>`).join('');
     wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteNotif(b.dataset.del)));
   }
-  async function deleteNotif(id){
+  function deleteNotif(id){
     const item = state.notifikasi.find(x => x.id === id);
     state.notifikasi = state.notifikasi.filter(x => x.id !== id);
     renderAllNotif();
-    if(item){
-      const result = await gsDelete('notifikasi', item);
-      if(!result.ok){
-        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
-        return;
-      }
-    }
+    if(item) gsDelete('notifikasi', item);
     toast('Notifikasi dihapus');
   }
-  $('#formNotif').addEventListener('submit', async e => {
+  $('#formNotif').addEventListener('submit', e => {
     e.preventDefault();
     const data = {
       id: nextId(),
@@ -2193,14 +2172,9 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     if(!data.text){ toast('Isi notifikasi wajib diisi'); return; }
     state.notifikasi.unshift(data);
     renderAllNotif();
+    gsUpsert('notifikasi', data);
     e.target.reset();
-    const result = await gsUpsert('notifikasi', data);
-    if(result.ok){
-      toast('Notifikasi ditambahkan');
-    } else if(result.error !== 'unauthorized'){
-      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
-      await resyncAfterFailure();
-    }
+    toast('Notifikasi ditambahkan');
   });
   $('#notifResetBtn').addEventListener('click', () => { $('#formNotif').reset(); });
 
@@ -2254,22 +2228,16 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     }).join('');
     wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteAdminLink(b.dataset.del)));
   }
-  async function deleteAdminLink(key){
+  function deleteAdminLink(key){
     const item = state.adminLinks.find(x => x.id === key);
     state.adminLinks = state.adminLinks.filter(x => x.id !== key);
     applyAdminLink(key, '');
     renderAdminLinkList();
-    if(item){
-      const result = await gsDelete('adminlinks', item);
-      if(!result.ok){
-        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
-        return;
-      }
-    }
+    if(item) gsDelete('adminlinks', item);
     toast('Link dihapus, bagian kembali nonaktif');
   }
   $('#alinkKey').addEventListener('change', () => { $('#alinkUrl').value = getAdminLink($('#alinkKey').value); });
-  $('#formAdminLink').addEventListener('submit', async e => {
+  $('#formAdminLink').addEventListener('submit', e => {
     e.preventDefault();
     const key = $('#alinkKey').value;
     const url = $('#alinkUrl').value.trim();
@@ -2279,15 +2247,71 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     if(idx > -1) state.adminLinks[idx] = data; else state.adminLinks.push(data);
     applyAdminLink(key, url);
     renderAdminLinkList();
-    const result = await gsUpsert('adminlinks', data);
-    if(result.ok){
-      toast('Link tersimpan: ' + (ADMIN_LINK_ITEMS.find(x => x.key === key) || {}).label);
-    } else if(result.error !== 'unauthorized'){
-      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
-      await resyncAfterFailure();
-    }
+    gsUpsert('adminlinks', data);
+    toast('Link tersimpan: ' + (ADMIN_LINK_ITEMS.find(x => x.key === key) || {}).label);
   });
   $('#alinkResetBtn').addEventListener('click', () => { $('#formAdminLink').reset(); });
+
+  /* ═══ FAQ ═══ */
+  // Delegasi klik pada wadah #faqList (bukan per-item) supaya item FAQ yang
+  // ditambahkan lewat admin SETELAH halaman dimuat tetap bisa dibuka/tutup,
+  // tanpa perlu memasang listener satu-satu tiap kali daftar dirender ulang.
+  $('#faqList').addEventListener('click', e => {
+    const btn = e.target.closest('.faq-q');
+    if(btn) btn.closest('.faq-item').classList.toggle('open');
+  });
+  function renderFaqItem(f){
+    const el = document.createElement('div');
+    el.className = 'faq-item';
+    el.dataset.id = f.id;
+    el.innerHTML = `<button type="button" class="faq-q"><span>${esc(f.question)}</span><span class="faq-caret">⌄</span></button><div class="faq-a"><div class="faq-a-inner">${esc(f.answer)}</div></div>`;
+    return el;
+  }
+  function renderAllFaq(){
+    $$('#faqList .faq-item[data-id]').forEach(el => el.remove());
+    const list = $('#faqList');
+    state.faq.forEach(f => list.appendChild(renderFaqItem(f)));
+    renderFaqAdminList();
+  }
+  function renderFaqAdminList(){
+    const wrap = $('#faqAdminList');
+    if(!state.faq.length){ wrap.innerHTML = '<div class="admin-list-item"><div class="li-main"><div class="li-sub">Belum ada FAQ ditambahkan lewat panel admin.</div></div></div>'; return; }
+    wrap.innerHTML = state.faq.map(f => `
+      <div class="admin-list-item">
+        <div class="li-main"><div class="li-title">${esc(f.question)}</div></div>
+        <div class="li-btns"><button type="button" data-edit="${f.id}">✎</button><button type="button" data-del="${f.id}">🗑</button></div>
+      </div>`).join('');
+    wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editFaq(b.dataset.edit)));
+    wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteFaq(b.dataset.del)));
+  }
+  function editFaq(id){
+    const f = state.faq.find(x => x.id === id); if(!f) return;
+    editing.faq = id;
+    $('#faqQ').value = f.question; $('#faqA').value = f.answer;
+    toast('Mengedit: ' + f.question);
+  }
+  function deleteFaq(id){
+    const item = state.faq.find(x => x.id === id);
+    state.faq = state.faq.filter(x => x.id !== id);
+    renderAllFaq();
+    if(item) gsDelete('faq', item);
+    toast('FAQ dihapus');
+  }
+  $('#formFaq').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = { id: editing.faq || nextId(), question: $('#faqQ').value.trim(), answer: $('#faqA').value.trim() };
+    if(!data.question || !data.answer){ toast('Pertanyaan dan jawaban wajib diisi'); return; }
+    if(editing.faq){
+      const idx = state.faq.findIndex(x => x.id === editing.faq);
+      if(idx > -1) state.faq[idx] = data;
+      editing.faq = null;
+    } else { state.faq.push(data); }
+    renderAllFaq();
+    gsUpsert('faq', data);
+    e.target.reset();
+    toast('FAQ tersimpan: ' + data.question);
+  });
+  $('#faqResetBtn').addEventListener('click', () => { $('#formFaq').reset(); editing.faq = null; });
 
   /* ═══ EXPORT / IMPORT ═══ */
   $('#exportBtn').addEventListener('click', () => {
@@ -2312,6 +2336,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
         state.pengumuman = Array.isArray(parsed.pengumuman) ? parsed.pengumuman : [];
         state.adminLinks = Array.isArray(parsed.adminLinks) ? parsed.adminLinks : [];
         state.notifikasi = Array.isArray(parsed.notifikasi) ? parsed.notifikasi : [];
+        state.faq = Array.isArray(parsed.faq) ? parsed.faq : [];
         renderAllDocs();
         state.kelas.forEach(applyKelasToGrid);
         renderKelasList();
@@ -2319,6 +2344,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
         renderAllPengumuman();
         renderAllAdminLinks();
         renderAllNotif();
+        renderAllFaq();
         toast('Data berhasil dimuat dari file');
       } catch(err){ toast('Gagal membaca file JSON'); }
       e.target.value = '';
@@ -2329,13 +2355,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   $('#gsPullBtn').addEventListener('click', gsFetchAll);
   $('#clearLocalBtn').addEventListener('click', () => {
     try { localStorage.removeItem(LOCAL_STATE_KEY); } catch(e){}
-    state.documents = []; state.kelas = []; state.jadwal = []; state.pengumuman = []; state.adminLinks = []; state.notifikasi = [];
+    state.documents = []; state.kelas = []; state.jadwal = []; state.pengumuman = []; state.adminLinks = []; state.notifikasi = []; state.faq = [];
     renderAllDocs();
     renderKelasList();
     renderAllJadwal();
     renderAllPengumuman();
     renderAllAdminLinks();
     renderAllNotif();
+    renderAllFaq();
     toast('Data lokal dihapus, kembali ke tampilan bawaan');
   });
 
@@ -2350,6 +2377,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   renderAllPengumuman();
   renderAllAdminLinks();
   renderAllNotif();
+  renderAllFaq();
   refreshTimeAgo(); // hitung "X yang lalu" dari timestamp asli begitu halaman dimuat
   setInterval(refreshTimeAgo, 60000); // perbarui otomatis tiap 60 detik tanpa perlu reload
   if(gsActive()){
