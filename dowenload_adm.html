@@ -1532,9 +1532,18 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     }
   }
 
+  // PENTING: fungsi ini SELALU mengembalikan hasil nyata { ok, error } — sebelumnya
+  // hasil sukses/gagal hanya ditulis ke teks status kecil (#gsStatus) yang gampang
+  // terlewat, sementara pemanggil tetap menampilkan toast "tersimpan" tanpa menunggu
+  // hasil ini sama sekali. Akibatnya saat request ke server gagal (token kedaluwarsa,
+  // deployment belum di-"New version", koneksi putus, dll), tampilan tetap bilang
+  // "berhasil disimpan" padahal baris di Google Sheets TIDAK PERNAH tertulis — begitu
+  // halaman di-refresh dan data ditarik ulang dari server, perubahan itu hilang.
+  // Sekarang pemanggil (form submit / tombol hapus) WAJIB menunggu (await) nilai ini
+  // sebelum memutuskan pesan apa yang ditampilkan ke admin.
   async function gsUpsert(type, item){
     saveLocalState();
-    if(!gsActive()) return;
+    if(!gsActive()) return { ok: true, offline: true };
     try {
       const res = await fetch(WEBAPP_URL, {
         method: 'POST',
@@ -1544,19 +1553,23 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       const json = await res.json();
       if(json.ok){
         setGsStatus('Tersinkron ke server ' + new Date().toLocaleTimeString('id-ID'));
+        return { ok: true };
       } else if(json.error === 'unauthorized'){
         handleSessionExpired();
+        return { ok: false, error: 'unauthorized' };
       } else {
         setGsStatus('Gagal menyinkron: ' + (json.error || 'unknown'));
+        return { ok: false, error: json.error || 'unknown' };
       }
     } catch(err){
       setGsStatus('Gagal menyinkron ke server (tersimpan lokal saja).');
+      return { ok: false, error: 'network' };
     }
   }
 
   async function gsDelete(type, item){
     saveLocalState();
-    if(!gsActive()) return;
+    if(!gsActive()) return { ok: true, offline: true };
     try {
       const res = await fetch(WEBAPP_URL, {
         method: 'POST',
@@ -1566,14 +1579,25 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       const json = await res.json();
       if(json.ok){
         setGsStatus('Tersinkron ke server ' + new Date().toLocaleTimeString('id-ID'));
+        return { ok: true };
       } else if(json.error === 'unauthorized'){
         handleSessionExpired();
+        return { ok: false, error: 'unauthorized' };
       } else {
         setGsStatus('Gagal menyinkron penghapusan: ' + (json.error || 'unknown'));
+        return { ok: false, error: json.error || 'unknown' };
       }
     } catch(err){
       setGsStatus('Gagal menyinkron penghapusan ke server.');
+      return { ok: false, error: 'network' };
     }
+  }
+
+  // Dipanggil setelah upsert/delete gagal tersinkron ke server: menarik ulang data
+  // ASLI dari Sheets supaya tampilan tidak terus-menerus "berbohong" ke admin dengan
+  // menampilkan perubahan yang sebenarnya tidak pernah tersimpan di server.
+  async function resyncAfterFailure(){
+    if(gsActive()) await gsFetchAll();
   }
 
   function handleSessionExpired(){
@@ -1757,11 +1781,17 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#dokDesk').value = d.desk || ''; $('#dokBaru').checked = !!d.baru;
     toast('Mengedit: ' + d.judul);
   }
-  function deleteDok(id){
+  async function deleteDok(id){
     const item = state.documents.find(x => x.id === id);
     state.documents = state.documents.filter(x => x.id !== id);
     renderAllDocs();
-    if(item) gsDelete('documents', item);
+    if(item){
+      const result = await gsDelete('documents', item);
+      if(!result.ok){
+        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
+        return;
+      }
+    }
     toast('Dokumen dihapus');
   }
 
@@ -1841,7 +1871,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#dokFile').disabled = false;
   });
 
-  $('#formDok').addEventListener('submit', e => {
+  $('#formDok').addEventListener('submit', async e => {
     e.preventDefault();
     const data = {
       id: editing.dok || nextId(),
@@ -1863,10 +1893,17 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       state.documents.unshift(data);
     }
     renderAllDocs();
-    gsUpsert('documents', data);
     e.target.reset();
     $('#dokUploadStatus').textContent = '';
-    toast('Dokumen tersimpan: ' + data.judul);
+    // Tunggu konfirmasi server dulu sebelum bilang "tersimpan" — supaya toast tidak
+    // menyesatkan saat penyimpanan ke Sheets sebenarnya gagal (lihat gsUpsert).
+    const result = await gsUpsert('documents', data);
+    if(result.ok){
+      toast('Dokumen tersimpan: ' + data.judul);
+    } else if(result.error !== 'unauthorized'){
+      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
+      await resyncAfterFailure();
+    }
   });
   $('#dokResetBtn').addEventListener('click', () => { $('#formDok').reset(); editing.dok = null; $('#dokUploadStatus').textContent = ''; });
 
@@ -1903,15 +1940,21 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#kelasNama').value = k.nama; $('#kelasJumlah').value = k.jumlah;
     toast('Mengedit: ' + k.nama);
   }
-  function deleteKelas(id){
+  async function deleteKelas(id){
     const item = state.kelas.find(x => x.id === id);
     state.kelas = state.kelas.filter(x => x.id !== id);
     renderKelasList();
-    if(item) gsDelete('kelas', item);
+    if(item){
+      const result = await gsDelete('kelas', item);
+      if(!result.ok){
+        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
+        return;
+      }
+    }
     toast('Data kelas dihapus dari daftar admin (kartu program keahlian tidak diubah kembali otomatis)');
   }
 
-  $('#formKelas').addEventListener('submit', e => {
+  $('#formKelas').addEventListener('submit', async e => {
     e.preventDefault();
     const data = { id: editing.kelas || nextId(), nama: $('#kelasNama').value.trim(), jumlah: parseInt($('#kelasJumlah').value, 10) || 0 };
     if(!data.nama){ toast('Nama program keahlian wajib diisi'); return; }
@@ -1922,9 +1965,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     } else { state.kelas.push(data); }
     applyKelasToGrid(data);
     renderKelasList();
-    gsUpsert('kelas', data);
     e.target.reset();
-    toast('Data kelas tersimpan: ' + data.nama);
+    const result = await gsUpsert('kelas', data);
+    if(result.ok){
+      toast('Data kelas tersimpan: ' + data.nama);
+    } else if(result.error !== 'unauthorized'){
+      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
+      await resyncAfterFailure();
+    }
   });
   $('#kelasResetBtn').addEventListener('click', () => { $('#formKelas').reset(); editing.kelas = null; });
 
@@ -1972,14 +2020,20 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#jadwalStatus').value = j.status || 'up';
     toast('Mengedit: ' + j.jenis);
   }
-  function deleteJadwal(id){
+  async function deleteJadwal(id){
     const item = state.jadwal.find(x => x.id === id);
     state.jadwal = state.jadwal.filter(x => x.id !== id);
     renderAllJadwal();
-    if(item) gsDelete('jadwal', item);
+    if(item){
+      const result = await gsDelete('jadwal', item);
+      if(!result.ok){
+        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
+        return;
+      }
+    }
     toast('Jadwal dihapus');
   }
-  $('#formJadwal').addEventListener('submit', e => {
+  $('#formJadwal').addEventListener('submit', async e => {
     e.preventDefault();
     const data = {
       id: editing.jadwal || nextId(),
@@ -1998,9 +2052,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       editing.jadwal = null;
     } else { state.jadwal.push(data); }
     renderAllJadwal();
-    gsUpsert('jadwal', data);
     e.target.reset();
-    toast('Jadwal tersimpan: ' + data.jenis);
+    const result = await gsUpsert('jadwal', data);
+    if(result.ok){
+      toast('Jadwal tersimpan: ' + data.jenis);
+    } else if(result.error !== 'unauthorized'){
+      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
+      await resyncAfterFailure();
+    }
   });
   $('#jadwalResetBtn').addEventListener('click', () => { $('#formJadwal').reset(); editing.jadwal = null; });
 
@@ -2042,14 +2101,20 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     $('#pengExcerpt').value = p.excerpt || ''; $('#pengTanggal').value = p.tanggal || '';
     toast('Mengedit: ' + p.judul);
   }
-  function deletePengumuman(id){
+  async function deletePengumuman(id){
     const item = state.pengumuman.find(x => x.id === id);
     state.pengumuman = state.pengumuman.filter(x => x.id !== id);
     renderAllPengumuman();
-    if(item) gsDelete('pengumuman', item);
+    if(item){
+      const result = await gsDelete('pengumuman', item);
+      if(!result.ok){
+        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
+        return;
+      }
+    }
     toast('Pengumuman dihapus');
   }
-  $('#formPengumuman').addEventListener('submit', e => {
+  $('#formPengumuman').addEventListener('submit', async e => {
     e.preventDefault();
     const data = {
       id: editing.pengumuman || nextId(),
@@ -2065,9 +2130,18 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       editing.pengumuman = null;
     } else { state.pengumuman.unshift(data); }
     renderAllPengumuman();
-    gsUpsert('pengumuman', data);
     e.target.reset();
-    toast('Pengumuman tersimpan: ' + data.judul);
+    // FIX UTAMA: dulu toast "tersimpan" ditampilkan langsung tanpa menunggu balasan
+    // server, sehingga tetap muncul walau penyimpanan ke Sheets sebenarnya gagal —
+    // itu sebabnya data terlihat "berhasil" tapi hilang saat halaman di-refresh.
+    // Sekarang toast baru muncul SETELAH server benar-benar mengonfirmasi.
+    const result = await gsUpsert('pengumuman', data);
+    if(result.ok){
+      toast('Pengumuman tersimpan: ' + data.judul);
+    } else if(result.error !== 'unauthorized'){
+      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
+      await resyncAfterFailure();
+    }
   });
   $('#pengResetBtn').addEventListener('click', () => { $('#formPengumuman').reset(); editing.pengumuman = null; });
 
@@ -2095,14 +2169,20 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
       </div>`).join('');
     wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteNotif(b.dataset.del)));
   }
-  function deleteNotif(id){
+  async function deleteNotif(id){
     const item = state.notifikasi.find(x => x.id === id);
     state.notifikasi = state.notifikasi.filter(x => x.id !== id);
     renderAllNotif();
-    if(item) gsDelete('notifikasi', item);
+    if(item){
+      const result = await gsDelete('notifikasi', item);
+      if(!result.ok){
+        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
+        return;
+      }
+    }
     toast('Notifikasi dihapus');
   }
-  $('#formNotif').addEventListener('submit', e => {
+  $('#formNotif').addEventListener('submit', async e => {
     e.preventDefault();
     const data = {
       id: nextId(),
@@ -2113,9 +2193,14 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     if(!data.text){ toast('Isi notifikasi wajib diisi'); return; }
     state.notifikasi.unshift(data);
     renderAllNotif();
-    gsUpsert('notifikasi', data);
     e.target.reset();
-    toast('Notifikasi ditambahkan');
+    const result = await gsUpsert('notifikasi', data);
+    if(result.ok){
+      toast('Notifikasi ditambahkan');
+    } else if(result.error !== 'unauthorized'){
+      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
+      await resyncAfterFailure();
+    }
   });
   $('#notifResetBtn').addEventListener('click', () => { $('#formNotif').reset(); });
 
@@ -2169,16 +2254,22 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     }).join('');
     wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteAdminLink(b.dataset.del)));
   }
-  function deleteAdminLink(key){
+  async function deleteAdminLink(key){
     const item = state.adminLinks.find(x => x.id === key);
     state.adminLinks = state.adminLinks.filter(x => x.id !== key);
     applyAdminLink(key, '');
     renderAdminLinkList();
-    if(item) gsDelete('adminlinks', item);
+    if(item){
+      const result = await gsDelete('adminlinks', item);
+      if(!result.ok){
+        if(result.error !== 'unauthorized'){ toast('Gagal menghapus di server, data disinkronkan ulang'); await resyncAfterFailure(); }
+        return;
+      }
+    }
     toast('Link dihapus, bagian kembali nonaktif');
   }
   $('#alinkKey').addEventListener('change', () => { $('#alinkUrl').value = getAdminLink($('#alinkKey').value); });
-  $('#formAdminLink').addEventListener('submit', e => {
+  $('#formAdminLink').addEventListener('submit', async e => {
     e.preventDefault();
     const key = $('#alinkKey').value;
     const url = $('#alinkUrl').value.trim();
@@ -2188,8 +2279,13 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
     if(idx > -1) state.adminLinks[idx] = data; else state.adminLinks.push(data);
     applyAdminLink(key, url);
     renderAdminLinkList();
-    gsUpsert('adminlinks', data);
-    toast('Link tersimpan: ' + (ADMIN_LINK_ITEMS.find(x => x.key === key) || {}).label);
+    const result = await gsUpsert('adminlinks', data);
+    if(result.ok){
+      toast('Link tersimpan: ' + (ADMIN_LINK_ITEMS.find(x => x.key === key) || {}).label);
+    } else if(result.error !== 'unauthorized'){
+      toast('Gagal menyimpan ke server — data disinkronkan ulang, periksa koneksi/login');
+      await resyncAfterFailure();
+    }
   });
   $('#alinkResetBtn').addEventListener('click', () => { $('#formAdminLink').reset(); });
 
