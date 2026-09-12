@@ -1283,7 +1283,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
 
         <!-- TAB: SYNC -->
         <div class="admin-pane" data-pane="sync">
-          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:10px;line-height:1.6">Perubahan tersimpan otomatis selama server admin tersambung. Gunakan tombol di bawah untuk mengunduh cadangan data sebagai file JSON, atau tarik ulang data terbaru dari server.</p>
+          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:10px;line-height:1.6">Kalau server admin (WEBAPP_URL) sudah tersambung, semua perubahan tersimpan otomatis ke Google Sheets. Kalau belum, perubahan tetap disimpan sementara di browser ini (localStorage) supaya tidak hilang saat refresh — tapi hanya di perangkat/browser ini, tidak ikut muncul di perangkat lain sampai server disambungkan. Gunakan tombol di bawah untuk mengunduh cadangan data sebagai file JSON, menarik ulang data terbaru dari server, atau menghapus data lokal.</p>
           <div class="admin-ref-item" style="margin-bottom:14px">
             <div><strong>Status Server</strong><span id="gsStatus">Belum terhubung — isi WEBAPP_URL di kode sumber.</span></div>
             <button type="button" class="btn-a-ghost" id="gsPullBtn" style="flex-shrink:0">🔄 Tarik Data Terbaru</button>
@@ -1291,6 +1291,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.65);padding:48px 20px
           <div class="admin-actions">
             <button type="button" class="btn-a-primary" id="exportBtn">⬇ Unduh Data (JSON)</button>
             <button type="button" class="btn-a-ghost" id="importBtnTrigger">⬆ Muat Data (JSON)</button>
+            <button type="button" class="btn-a-ghost" id="clearLocalBtn">🗑 Hapus Data Lokal</button>
             <input type="file" id="importFile" accept="application/json" style="display:none">
           </div>
         </div>
@@ -1463,6 +1464,32 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   /* ── SINKRONISASI SERVER ADMIN (opsional, isi WEBAPP_URL di atas) ── */
   const gsActive = () => !!WEBAPP_URL;
 
+  // ── PENYIMPANAN LOKAL CADANGAN (dipakai HANYA jika server/WEBAPP_URL belum aktif) ──
+  // Tanpa ini, semua perubahan admin (dokumen, jadwal, pengumuman, dll.) hanya hidup di
+  // memori JavaScript dan otomatis hilang begitu halaman di-refresh — karena browser tidak
+  // pernah diminta menyimpannya ke mana pun. localStorage menahan data itu di browser yang
+  // sama sampai admin sempat menyambungkan WEBAPP_URL (penyimpanan permanen & lintas perangkat).
+  const LOCAL_STATE_KEY = 'smkcalm_admin_state_v1';
+  function saveLocalState(){
+    if(gsActive()) return; // server yang aktif jadi satu-satunya sumber data yang benar
+    try { localStorage.setItem(LOCAL_STATE_KEY, JSON.stringify(state)); } catch(e){ /* mis. mode penyamaran; abaikan diam-diam */ }
+  }
+  function loadLocalState(){
+    if(gsActive()) return false;
+    try {
+      const raw = localStorage.getItem(LOCAL_STATE_KEY);
+      if(!raw) return false;
+      const parsed = JSON.parse(raw);
+      state.documents = Array.isArray(parsed.documents) ? parsed.documents : [];
+      state.kelas = Array.isArray(parsed.kelas) ? parsed.kelas : [];
+      state.jadwal = Array.isArray(parsed.jadwal) ? parsed.jadwal : [];
+      state.pengumuman = Array.isArray(parsed.pengumuman) ? parsed.pengumuman : [];
+      state.adminLinks = Array.isArray(parsed.adminLinks) ? parsed.adminLinks : [];
+      state.notifikasi = Array.isArray(parsed.notifikasi) ? parsed.notifikasi : [];
+      return true;
+    } catch(e){ return false; }
+  }
+
   function setGsStatus(msg){
     const el = $('#gsStatus');
     if(el) el.textContent = msg;
@@ -1499,6 +1526,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   }
 
   async function gsUpsert(type, item){
+    saveLocalState();
     if(!gsActive()) return;
     try {
       const res = await fetch(WEBAPP_URL, {
@@ -1520,6 +1548,7 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   }
 
   async function gsDelete(type, item){
+    saveLocalState();
     if(!gsActive()) return;
     try {
       const res = await fetch(WEBAPP_URL, {
@@ -2195,17 +2224,36 @@ document.querySelectorAll('.fu').forEach(el => { el.style.animationPlayState = '
   });
 
   $('#gsPullBtn').addEventListener('click', gsFetchAll);
+  $('#clearLocalBtn').addEventListener('click', () => {
+    try { localStorage.removeItem(LOCAL_STATE_KEY); } catch(e){}
+    state.documents = []; state.kelas = []; state.jadwal = []; state.pengumuman = []; state.adminLinks = []; state.notifikasi = [];
+    renderAllDocs();
+    renderKelasList();
+    renderAllJadwal();
+    renderAllPengumuman();
+    renderAllAdminLinks();
+    renderAllNotif();
+    toast('Data lokal dihapus, kembali ke tampilan bawaan');
+  });
 
   /* ── init ── */
-  renderDokList();
+  if(!gsActive() && loadLocalState()){
+    toast('Data admin lokal dari kunjungan sebelumnya dimuat kembali');
+  }
+  renderAllDocs();
+  state.kelas.forEach(applyKelasToGrid);
   renderKelasList();
-  renderJadwalList();
-  renderPengumumanList();
-  renderAdminLinkList();
-  renderNotifAdminList();
+  renderAllJadwal();
+  renderAllPengumuman();
+  renderAllAdminLinks();
+  renderAllNotif();
   refreshTimeAgo(); // hitung "X yang lalu" dari timestamp asli begitu halaman dimuat
   setInterval(refreshTimeAgo, 60000); // perbarui otomatis tiap 60 detik tanpa perlu reload
-  if(gsActive()){ gsFetchAll(); } else { setGsStatus('Belum terhubung — isi WEBAPP_URL di kode sumber.'); }
+  if(gsActive()){
+    gsFetchAll();
+  } else {
+    setGsStatus('Belum terhubung ke server — perubahan disimpan sementara di browser ini saja (localStorage). Isi WEBAPP_URL untuk penyimpanan permanen & lintas perangkat.');
+  }
 })();
 </script>
 </body>
